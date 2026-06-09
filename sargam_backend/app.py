@@ -1,13 +1,10 @@
-from flask import Flask, request, jsonify
+import gradio as gr
 import librosa
 import numpy as np
 from google import genai
 import os
-import tempfile
 
-app = Flask(__name__)
-
-# Put your Gemini API key here
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 def hz_to_note(frequency):
     if frequency <= 0:
@@ -19,20 +16,16 @@ def hz_to_note(frequency):
     return notes[note_number % 12]
 
 def analyze_audio(filepath):
-    y, sr = librosa.load(filepath, duration=60)  # max 60 seconds
-
-    # Pitch detection
+    y, sr = librosa.load(filepath, duration=60)
     pitches, magnitudes = librosa.piptrack(y=y, sr=sr, hop_length=512)
-
     notes_data = []
     times = librosa.times_like(pitches, sr=sr, hop_length=512)
 
-    for i in range(0, pitches.shape[1], 5):  # sample every 5 frames
+    for i in range(0, pitches.shape[1], 5):
         idx = magnitudes[:, i].argmax()
         pitch = pitches[idx, i]
         magnitude = magnitudes[idx, i]
-
-        if pitch > 80 and magnitude > 0.01:  # filter noise
+        if pitch > 80 and magnitude > 0.01:
             note = hz_to_note(pitch)
             if note:
                 notes_data.append({
@@ -41,11 +34,10 @@ def analyze_audio(filepath):
                     "loudness": round(float(magnitude), 3)
                 })
 
-    return notes_data[:200]  # send max 200 notes to Gemini
+    return notes_data[:200]
 
 def build_gemini_prompt(notes_data):
     notes_str = ", ".join([f"{n['note']}({n['time']}s, vol:{n['loudness']})" for n in notes_data])
-
     prompt = f"""
 You are an Indian classical music expert. Convert these Western music notes to Indian Sargam notation for a flute player.
 
@@ -68,47 +60,33 @@ Keep it clear and simple for a beginner flute player.
 """
     return prompt
 
-@app.route('/convert', methods=['POST'])
-def convert_audio():
-    if 'audio' not in request.files:
-        return jsonify({"error": "No audio file provided"}), 400
-
-    file = request.files['audio']
-
-    # Save to temp file
-    suffix = os.path.splitext(file.filename)[1]
-    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-        file.save(tmp.name)
-        tmp_path = tmp.name
-
+def convert_to_sargam(audio_file):
     try:
-        # Analyze audio
-        notes_data = analyze_audio(tmp_path)
+        if audio_file is None:
+            return "Please upload an audio file."
+
+        notes_data = analyze_audio(audio_file)
 
         if not notes_data:
-            return jsonify({"error": "Could not detect any notes in audio"}), 400
+            return "Could not detect any notes in the audio. Please try a clearer recording."
 
-        # Call Gemini
         prompt = build_gemini_prompt(notes_data)
-        client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
         response = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=prompt
         )
 
-        return jsonify({
-            "success": True,
-            "sargam": response.text,
-            "notes_detected": len(notes_data)
-        })
+        return response.text
 
-    finally:
-        os.unlink(tmp_path)  # clean up temp file
+    except Exception as e:
+        return f"Error: {str(e)}"
 
-@app.route('/health', methods=['GET'])
-def health():
-    return jsonify({"status": "running"})
+demo = gr.Interface(
+    fn=convert_to_sargam,
+    inputs=gr.Audio(type="filepath", label="Upload Song (MP3, WAV, etc.)"),
+    outputs=gr.Textbox(label="Sargam Sheet", lines=20),
+    title="🎵 Sargam Sheet Generator",
+    description="Upload any song and get Sa Re Ga Ma Pa notation for flute players!"
+)
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)
+demo.launch()
