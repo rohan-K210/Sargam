@@ -8,7 +8,6 @@ import tempfile
 app = Flask(__name__)
 
 # Put your Gemini API key here
-client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 def hz_to_note(frequency):
     if frequency <= 0:
@@ -91,6 +90,7 @@ def convert_audio():
 
         # Call Gemini
         prompt = build_gemini_prompt(notes_data)
+        client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
         response = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=prompt
