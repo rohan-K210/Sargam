@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sargam Sheet Generator</title>
+<style>
+  /* ===== CSS Variables ===== */
+  :root {
+    --bg-primary: #0a0a1a;
+    --bg-secondary: #12122a;
+    --bg-card: #1a1a3e;
+    --bg-card-vocal: #1a2a3e;
+    --bg-card-instr: #1e1a3a;
+    --bg-elevated: #222255;
+    --bg-hover: #2a2a66;
+    --text-primary: #f0e6ff;
+    --text-secondary: #a89bc2;
+    --text-muted: #726a8a;
+    --accent-gold: #f0c040;
+    --accent-amber: #ff8c42;
+    --accent-purple: #8855ff;
+    --accent-teal: #44cfc0;
+    --accent-green: #44cc66;
+    --border-color: #2a2a55;
+    --border-glow: rgba(136, 85, 255, 0.3);
+    --shadow-md: 0 4px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 8px 48px rgba(0,0,0,0.6);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ===== Sargam Note Colors ===== */
+  .note-sa { color: #ff4455; }
+  .note-re { color: #ff8c00; }
+  .note-ga { color: #ffd700; }
+  .note-ma { color: #44cc66; }
+  .note-pa { color: #4488ff; }
+  .note-dha { color: #8844ff; }
+  .note-ni { color: #cc44ff; }
+
+  /* ===== Reset & Base ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-main);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== Animated Background ===== */
+  .bg-orb {
+    position: fixed; top: -30vh; right: -20vw; width: 80vw; height: 80vw;
+    background: radial-gradient(circle, rgba(136,85,255,0.08) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+    animation: orbFloat 20s ease-in-out infinite;
+  }
+  .bg-orb-2 {
+    position: fixed; bottom: -20vh; left: -10vw; width: 60vw; height: 60vw;
+    background: radial-gradient(circle, rgba(240,192,64,0.05) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+    animation: orbFloat 25s ease-in-out infinite reverse;
+  }
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(5%, 5%) scale(1.05); }
+  }
+
+  /* ===== Layout ===== */
+  .app-container {
+    position: relative; z-index: 1;
+    max-width: 860px; margin: 0 auto; padding: 20px 16px 60px;
+  }
+
+  /* ===== Header ===== */
+  .header {
+    text-align: center; padding: 32px 0 24px;
+  }
+  .header-icon {
+    font-size: 48px; margin-bottom: 6px;
+    display: inline-block;
+    animation: gentleBounce 3s ease-in-out infinite;
+  }
+  @keyframes gentleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .header h1 {
+    font-size: 28px; font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header p {
+    color: var(--text-secondary); font-size: 14px; margin-top: 4px;
+  }
+
+  /* ===== Note Legend ===== */
+  .note-legend {
+    display: flex; justify-content: center; gap: 6px;
+    margin-top: 14px; flex-wrap: wrap;
+  }
+  .note-pill {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 3px 8px; border-radius: 16px;
+    border: 1px solid; font-size: 11px; font-weight: 600;
+    cursor: default; opacity: 0.85;
+  }
+
+  /* ===== Cards ===== */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: var(--transition);
+  }
+  .card:hover {
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-md);
+  }
+  .card-title {
+    font-size: 15px; font-weight: 600; margin-bottom: 16px;
+    color: var(--text-secondary);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .icon { font-size: 18px; }
+
+  /* ===== Upload Zone ===== */
+  .upload-zone {
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+  }
+  .upload-zone:hover,
+  .upload-zone.drag-over {
+    border-color: var(--accent-purple);
+    background: rgba(136,85,255,0.05);
+  }
+  .upload-zone.has-file {
+    border-color: var(--accent-teal);
+    background: rgba(68,207,192,0.05);
+  }
+  .upload-zone .upload-icon { font-size: 40px; margin-bottom: 10px; opacity: 0.7; }
+  .upload-zone .upload-text { font-size: 15px; font-weight: 500; }
+  .upload-zone .upload-hint { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-zone .file-info {
+    margin-top: 10px; padding: 6px 14px;
+    background: rgba(68,207,192,0.1);
+    border-radius: var(--radius-sm);
+    font-size: 12px; color: var(--accent-teal);
+    display: none;
+  }
+  .upload-zone.has-file .file-info { display: inline-block; }
+
+  /* ===== Input Fields ===== */
+  .input-group { margin-bottom: 12px; }
+  .input-group label {
+    display: block; font-size: 13px; font-weight: 500;
+    color: var(--text-secondary); margin-bottom: 4px;
+  }
+  .input-group input,
+  .input-group textarea,
+  .input-group select {
+    width: 100%; padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 14px; font-family: var(--font-main);
+    transition: var(--transition);
+    outline: none;
+  }
+  .input-group input:focus,
+  .input-group textarea:focus,
+  .input-group select:focus {
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px rgba(136,85,255,0.15);
+  }
+  .input-group textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+  .input-group select option { background: var(--bg-secondary); color: var(--text-primary); }
+
+  /* ===== Sa Candidate Selector ===== */
+  .sa-selector {
+    display: none;
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: rgba(136,85,255,0.06);
+    border: 1px solid rgba(136,85,255,0.2);
+    border-radius: var(--radius-md);
+  }
+  .sa-selector.active { display: block; }
+  .sa-selector .sa-candidates {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;
+  }
+  .sa-candidate-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 12px; font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .sa-candidate-btn:hover {
+    border-color: var(--accent-purple);
+    background: rgba(136,85,255,0.1);
+  }
+  .sa-candidate-btn.selected {
+    border-color: var(--accent-gold);
+    background: rgba(240,192,64,0.15);
+    color: var(--accent-gold);
+  }
+  .sa-candidate-btn .conf-badge {
+    font-size: 10px; padding: 1px 6px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    color: var(--text-muted);
+  }
+  .sa-selector .sa-manual-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+  }
+  .sa-selector .sa-manual-row label {
+    font-size: 12px; color: var(--text-secondary); white-space: nowrap;
+  }
+  .sa-selector .sa-manual-row select {
+    width: auto; min-width: 100px; padding: 6px 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 13px;
+    outline: none;
+  }
+  .sa-selector .sa-manual-row select:focus {
+    border-color: var(--accent-amber);
+  }
+  .sa-selector .sa-selected-info {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--accent-teal);
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* ===== Buttons ===== */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 24px; border: none; border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: var(--transition); text-decoration: none;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-purple), #6633cc);
+    color: white; box-shadow: 0 4px 16px rgba(136,85,255,0.3);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 6px 24px rgba(136,85,255,0.5);
+    transform: translateY(-1px);
+  }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+    color: #1a1a2e; box-shadow: 0 4px 16px rgba(240,192,64,0.3);
+  }
+  .btn-gold:hover {
+    box-shadow: 0 6px 24px rgba(240,192,64,0.5);
+    transform: translateY(-1px);
+  }
+  .btn-outline {
+    background: transparent; border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+  }
+  .btn-outline:hover {
+    border-color: var(--accent-purple); color: var(--text-primary);
+    background: rgba(136,85,255,0.1);
+  }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+  .btn-xs { padding: 4px 10px; font-size: 11px; }
+
+  /* ===== Action Bar ===== */
+  .action-bar { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; justify-content: center; }
+
+  /* ===== Loading ===== */
+  .loading-overlay {
+    display: none; align-items: center; justify-content: center;
+    flex-direction: column; gap: 14px; padding: 40px 20px;
+  }
+  .loading-overlay.active { display: flex; }
+  .spinner {
+    width: 44px; height: 44px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-purple);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: var(--text-secondary); font-size: 13px; animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+  .loading-steps { display: flex; flex-direction: column; gap: 4px; align-items: center; margin-top: 4px; }
+  .loading-step { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+  .loading-step.done { color: var(--accent-teal); }
+  .loading-step.active { color: var(--accent-gold); }
+  .loading-step .check { opacity: 0; }
+  .loading-step.done .check { opacity: 1; }
+
+  /* ===== Results Section ===== */
+  .results-section { display: none; }
+  .results-section.active { display: block; }
+
+  /* ===== Sa Badge ===== */
+  .sa-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; background: rgba(136,85,255,0.1);
+    border: 1px solid rgba(136,85,255,0.2);
+    border-radius: var(--radius-sm); font-size: 12px; margin-bottom: 14px;
+  }
+  .sa-badge .freq { color: var(--text-muted); }
+
+  /* ===== Flute Play Bar ===== */
+  .flute-play-bar {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, rgba(136,85,255,0.08), rgba(240,192,64,0.05));
+    border: 1px solid var(--accent-purple);
+    border-radius: var(--radius-md);
+    margin-bottom: 18px;
+  }
+  .flute-play-bar.active { display: flex; }
+
+  .flute-play-bar .fp-row {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .flute-play-bar .fp-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 2px solid var(--accent-teal);
+    background: transparent; color: var(--accent-teal);
+    font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: var(--transition); flex-shrink: 0;
+  }
+  .flute-play-bar .fp-btn:hover {
+    background: var(--accent-teal); color: var(--bg-primary);
+  }
+  .flute-play-bar .fp-btn.playing {
+    background: var(--accent-teal); color: var(--bg-primary);
+  }
+  .flute-play-bar .fp-btn.danger {
+    border-color: #ff4455; color: #ff4455;
+  }
+  .flute-play-bar .fp-btn.danger:hover {
+    background: #ff4455; color: white;
+  }
+  .flute-play-bar .fp-label {
+    font-size: 12px; color: var(--text-secondary); font-weight: 600;
+    white-space: nowrap;
+  }
+  .flute-play-bar .fp-progress {
+    flex: 1; min-width: 120px;
+  }
+  .flute-play-bar .fp-progress .fp-progress-bar {
+    width: 100%; height: 5px;
+    background: var(--border-color); border-radius: 3px;
+    overflow: hidden; cursor: pointer;
+  }
+  .flute-play-bar .fp-progress .fp-progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
+    border-radius: 3px; transition: width 0.1s linear;
+  }
+  .flute-play-bar .fp-progress .fp-progress-label {
+    font-size: 10px; color: var(--text-muted);
+    margin-top: 3px; display: flex; justify-content: space-between;
+  }
+
+  /* Speed control */
+  .speed-control {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .speed-control .speed-btn {
+    padding: 3px 7px; border: 1px solid var(--border-color);
+    background: var(--bg-secondary); color: var(--text-muted);
+    font-size: 10px; font-weight: 600; cursor: pointer;
+    border-radius: 4px; transition: var(--transition);
+  }
+  .speed-control .speed-btn:hover {
+    border-color: var(--accent-gold); color: var(--accent-gold);
+  }
+  .speed-control .speed-btn.active {
+    border-color: var(--accent-gold); background: rgba(240,192,64,0.15);
+    color: var(--accent-gold);
+  }
+
+  /* Transpose control */
+  .transpose-control {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .transpose-control .tp-btn {
+    width: 26px; height: 26px; border: 1px solid var(--border-color);
+    background: var(--bg-secondary); color: var(--text-muted);
+    font-size: 13px; cursor: pointer;
+    border-radius: 4px; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .transpose-control .tp-btn:hover {
+    border-color: var(--accent-teal); color: var(--accent-teal);
+  }
+  .transpose-control .tp-value {
+    font-size: 12px; font-weight: 600; color: var(--accent-teal);
+    min-width: 28px; text-align: center; font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== Block Cards ===== */
+  .blocks-container {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .block-card {
+    display: flex;
+    align-items: flex-start;
+    background: var(--bg-card-instr);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .block-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    opacity: 0;
+    transition: var(--transition);
+  }
+  .block-card.vocal {
+    background: var(--bg-card-vocal);
+  }
+  .block-card.vocal::before {
+    background: var(--accent-gold);
+  }
+  .block-card.instrumental::before {
+    background: var(--accent-teal);
+  }
+
+  .block-card:hover {
+    border-color: var(--border-glow);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .block-card.playing {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 20px rgba(240,192,64,0.15);
+  }
+  .block-card.playing::before {
+    opacity: 1;
+  }
+  .block-card.playing-active {
+    border-color: var(--accent-teal);
+    box-shadow: 0 0 20px rgba(68,207,192,0.15);
+    background: rgba(68,207,192,0.05);
+  }
+  .block-card.playing-active::before {
+    opacity: 1;
+    background: var(--accent-teal);
+  }
+
+  /* Block Index/Time */
+  .block-index {
+    font-size: 11px; color: var(--text-muted);
+    min-width: 56px; padding-top: 2px;
+    flex-shrink: 0;
+  }
+  .block-index .time-range {
+    display: block; font-size: 12px; font-weight: 600;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Block Type Badge */
+  .block-type-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 600;
+    padding: 1px 8px; border-radius: 10px;
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .block-type-badge.vocal {
+    background: rgba(240,192,64,0.15);
+    color: var(--accent-gold);
+  }
+  .block-type-badge.instrumental {
+    background: rgba(68,207,192,0.12);
+    color: var(--accent-teal);
+  }
+
+  /* Block Content */
+  .block-content {
+    flex: 1;
+    min-width: 0;
+    padding: 0 14px;
+  }
+  .block-content.vocal-content {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .block-content.vocal-content .lyrics-side {
+    flex: 0 0 auto;
+    min-width: 120px;
+    max-width: 45%;
+  }
+  .block-content.vocal-content .sargam-side {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .block-lyrics {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 500;
+    line-height: 1.5;
+    padding: 2px 0;
+  }
+  .block-lyrics::before {
+    content: '🎵 ';
+    opacity: 0.7;
+  }
+
+  .block-sargam {
+    font-size: 13px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--accent-gold);
+    line-height: 1.6;
+    word-break: break-word;
+    padding: 2px 0;
+  }
+  .block-sargam::before {
+    content: '🎶 ';
+    opacity: 0.7;
+  }
+  .block-sargam.instr-only::before {
+    content: '🎶 ';
+    opacity: 0.6;
+  }
+  .block-sargam .sargam-token {
+    display: inline-block;
+    padding: 2px 4px;
+    margin: 0 1px;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: all 0.1s ease;
+    position: relative;
+  }
+  .block-sargam .sargam-token.long-note {
+    font-weight: 700;
+    text-shadow: 0 0 6px rgba(240,192,64,0.3);
+  }
+  .block-sargam .sargam-token.note-active {
+    background: rgba(240,192,64,0.3) !important;
+    color: white !important;
+    transform: scale(1.15);
+    box-shadow: 0 0 12px rgba(240,192,64,0.4);
+    z-index: 2;
+  }
+  .block-card.playing-active .block-sargam .sargam-token.note-active {
+    background: rgba(68,207,192,0.35) !important;
+    color: white !important;
+    transform: scale(1.15);
+    box-shadow: 0 0 12px rgba(68,207,192,0.4);
+  }
+
+  /* Ornament markers */
+  .ornament-meend {
+    color: #ff88cc;
+    font-style: italic;
+  }
+  .ornament-meend::after {
+    content: '~';
+    color: #ff88cc;
+    font-weight: bold;
+  }
+  .ornament-gamak {
+    color: #88ffcc;
+  }
+  .ornament-gamak::after {
+    content: '~~~';
+    color: #88ffcc;
+    font-size: 10px;
+    vertical-align: super;
+  }
+
+  /* ===== Empty State ===== */
+  .empty-state {
+    text-align: center; padding: 28px 16px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 32px; margin-bottom: 6px; opacity: 0.5; }
+  .empty-state p { font-size: 13px; }
+
+  /* ===== Toast ===== */
+  .toast-container {
+    position: fixed; bottom: 24px; right: 24px;
+    display: flex; flex-direction: column; gap: 8px;
+    z-index: 1000;
+  }
+  .toast {
+    padding: 10px 18px; border-radius: var(--radius-sm);
+    font-size: 12px; font-weight: 500;
+    animation: slideUp 0.3s ease;
+    box-shadow: var(--shadow-lg);
+    max-width: 340px;
+  }
+  .toast-success { background: #1a3a2e; color: #44cfc0; border: 1px solid #44cfc0; }
+  .toast-error { background: #3a1a1a; color: #ff4455; border: 1px solid #ff4455; }
+  .toast-info { background: #1a1a3e; color: #4488ff; border: 1px solid #4488ff; }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== Gemini badge ===== */
+  .gemini-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; padding: 2px 8px; border-radius: 10px;
+    margin-left: 6px;
+  }
+  .gemini-badge.on { background: rgba(68,207,192,0.15); color: var(--accent-teal); }
+  .gemini-badge.off { background: rgba(255,68,85,0.15); color: #ff4455; }
+
+  /* Spleeter / madmom badges */
+  .tech-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 9px; padding: 2px 7px; border-radius: 10px;
+    margin-left: 4px;
+  }
+  .tech-badge.available { background: rgba(68,207,192,0.12); color: var(--accent-teal); }
+  .tech-badge.unavailable { background: rgba(255,68,85,0.1); color: #ff4455; }
+
+  /* ===== Warning Banner ===== */
+  .warning-banner {
+    display: none; padding: 10px 14px; margin-top: 14px;
+    background: rgba(255,140,0,0.12);
+    border: 1px solid rgba(255,140,0,0.3);
+    border-radius: var(--radius-sm);
+    font-size: 12px; color: var(--accent-amber);
+    align-items: flex-start; gap: 8px; line-height: 1.5;
+  }
+  .warning-banner.active { display: flex; }
+  .warning-banner code {
+    background: rgba(0,0,0,0.3); padding: 1px 5px;
+    border-radius: 3px; font-size: 11px;
+  }
+
+  /* ===== Block count chip ===== */
+  .block-count {
+    font-size: 12px; color: var(--text-muted);
+    text-align: center; margin-bottom: 14px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 640px) {
+    .app-container { padding: 12px; }
+    .header h1 { font-size: 22px; }
+    .header { padding: 20px 0; }
+    .card { padding: 14px; }
+    .upload-zone { padding: 28px 14px; }
+    .action-bar { flex-direction: column; }
+    .action-bar .btn { width: 100%; justify-content: center; }
+
+    .block-card { padding: 12px 14px; flex-wrap: wrap; }
+    .block-index { min-width: 48px; }
+    .block-content.vocal-content { flex-direction: column; gap: 6px; }
+    .block-content.vocal-content .lyrics-side { max-width: 100%; }
+    .toast-container { left: 16px; right: 16px; bottom: 16px; }
+    .flute-play-bar .fp-row { gap: 8px; }
+    .speed-control .speed-btn { padding: 2px 5px; font-size: 9px; }
+    .sa-selector .sa-candidates { flex-direction: column; }
+    .sa-candidate-btn { width: 100%; }
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+  ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+</style>
+</head>
+<body>
+  <div class="bg-orb"></div>
+  <div class="bg-orb-2"></div>
+
+  <div class="app-container">
+    <!-- ===== Header ===== -->
+    <header class="header">
+      <div class="header-icon">🎵</div>
+      <h1>Sargam Sheet Generator</h1>
+      <p>Convert any song into Indian sargam notation — block by block</p>
+      <div class="note-legend">
+        <span class="note-pill note-sa" style="border-color:#ff4455">Sa</span>
+        <span class="note-pill note-re" style="border-color:#ff8c00">Re <span class="komal">(re)</span></span>
+        <span class="note-pill note-ga" style="border-color:#ffd700">Ga <span class="komal">(ga)</span></span>
+        <span class="note-pill note-ma" style="border-color:#44cc66">Ma <span class="komal">(Ma')</span></span>
+        <span class="note-pill note-pa" style="border-color:#4488ff">Pa</span>
+        <span class="note-pill note-dha" style="border-color:#8844ff">Dha <span class="komal">(dha)</span></span>
+        <span class="note-pill note-ni" style="border-color:#cc44ff">Ni <span class="komal">(ni)</span></span>
+      </div>
+    </header>
+
+    <!-- ===== Upload Card ===== -->
+    <div class="card">
+      <div class="card-title"><span class="icon">🎤</span> Upload &amp; Configure</div>
+
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="audioInput" accept="audio/*">
+        <div class="upload-icon">🎧</div>
+        <div class="upload-text">Drop your audio file here</div>
+        <div class="upload-hint">Supports MP3, WAV, M4A, FLAC &mdash; max 50MB</div>
+        <div class="file-info" id="fileInfo">
+          <span id="fileName"></span>
+        </div>
+      </div>
+
+      <div class="input-group" style="margin-top:14px">
+        <label>🎵 Song Name</label>
+        <input type="text" id="songName" placeholder="e.g. Tum Hi Ho">
+      </div>
+
+      <div class="input-group">
+        <label>📝 Lyrics (optional — one line per phrase)</label>
+        <textarea id="lyricsInput" placeholder="Tum hi ho␊Aankhon mein␊Saanson mein"></textarea>
+      </div>
+
+      <!-- ===== Sa Candidate Selector ===== -->
+      <div class="sa-selector" id="saSelector">
+        <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+          <span>🎼</span> Select Your Tonic (Sa)
+          <span style="font-size: 10px; font-weight: 400; color: var(--text-muted);">Auto-detected candidates</span>
+        </div>
+        <div class="sa-candidates" id="saCandidates"></div>
+        <div class="sa-manual-row">
+          <label>Or manually enter Sa frequency:</label>
+          <select id="saManualSelect">
+            <option value="">Auto-detect</option>
+            <option value="130.81">C3 (130.8 Hz)</option>
+            <option value="138.59">C#3 (138.6 Hz)</option>
+            <option value="146.83">D3 (146.8 Hz)</option>
+            <option value="155.56">D#3 (155.6 Hz)</option>
+            <option value="164.81">E3 (164.8 Hz)</option>
+            <option value="174.61">F3 (174.6 Hz)</option>
+            <option value="185.00">F#3 (185.0 Hz)</option>
+            <option value="196.00">G3 (196.0 Hz)</option>
+            <option value="207.65">G#3 (207.7 Hz)</option>
+            <option value="220.00">A3 (220.0 Hz)</option>
+            <option value="233.08">A#3 (233.1 Hz)</option>
+            <option value="246.94">B3 (246.9 Hz)</option>
+            <option value="261.63">C4 (261.6 Hz)</option>
+            <option value="277.18">C#4 (277.2 Hz)</option>
+            <option value="293.66">D4 (293.7 Hz)</option>
+            <option value="311.13">D#4 (311.1 Hz)</option>
+            <option value="329.63">E4 (329.6 Hz)</option>
+            <option value="349.23">F4 (349.2 Hz)</option>
+            <option value="369.99">F#4 (370.0 Hz)</option>
+            <option value="392.00">G4 (392.0 Hz)</option>
+            <option value="415.30">G#4 (415.3 Hz)</option>
+            <option value="440.00">A4 (440.0 Hz)</option>
+            <option value="466.16">A#4 (466.2 Hz)</option>
+            <option value="493.88">B4 (493.9 Hz)</option>
+            <option value="523.25">C5 (523.3 Hz)</option>
+          </select>
+        </div>
+        <div class="sa-selected-info" id="saSelectedInfo" style="display:none;">
+          <span>✅</span> Using Sa: <strong id="saSelectedValue"></strong>
+        </div>
+      </div>
+
+      <div class="warning-banner" id="geminiWarning">
+        ⚠️ Gemini API key not set — sargam will be generated algorithmically.
+        Flute playback will synthesize notes via Web Audio API.
+        Set <code>GEMINI_API_KEY</code> environment variable for enhanced analysis.
+      </div>
+
+      <div class="action-bar">
+        <button class="btn btn-primary" id="detectSaBtn" onclick="detectSaCandidates()" style="display:none;">
+          🎼 Detect Sa Candidates
+        </button>
+        <button class="btn btn-primary" id="analyzeBtn" onclick="analyzeSong()">
+          🎼 Generate Sargam Sheet
+        </button>
+      </div>
+
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Analyzing melody &amp; extracting time blocks...</div>
+        <div class="loading-steps">
+          <div class="loading-step" id="step1"><span class="check">✓</span> Loading audio</div>
+          <div class="loading-step" id="step2"><span class="check">✓</span> Source separation &amp; beat tracking</div>
+          <div class="loading-step" id="step3"><span class="check">✓</span> Detecting pitch &amp; tonic (Sa)</div>
+          <div class="loading-step" id="step4"><span class="check">✓</span> Converting to sargam notation</div>
+          <div class="loading-step" id="step5"><span class="check">✓</span> Building time blocks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Results ===== -->
+    <div class="results-section" id="resultsSection">
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">📄</span> Sargam Sheet — Time Blocks
+          <span id="geminiBadge" class="gemini-badge" style="display:none"></span>
+        </div>
+
+        <div class="sa-badge" id="saBadge" style="display:none">
+          <span>🎼 Sa = <strong id="saNote"></strong></span>
+          <span class="freq" id="saFreq"></span>
+          <span class="tech-badge" id="spleeterBadge" style="display:none">Spleeter</span>
+          <span class="tech-badge" id="madmomBadge" style="display:none">madmom</span>
+        </div>
+
+        <!-- ===== Flute Play Bar ===== -->
+        <div class="flute-play-bar" id="flutePlayBar">
+          <div class="fp-row">
+            <div class="fp-label">🪈 Full Song Bansuri</div>
+            <button class="fp-btn" id="fpPlayBtn" onclick="toggleFlutePlay()" title="Play / Pause">▶</button>
+            <button class="fp-btn danger" onclick="stopFlutePlay()" title="Stop">⏹</button>
+
+            <div class="fp-progress">
+              <div class="fp-progress-bar">
+                <div class="fp-progress-fill" id="fpProgressFill"></div>
+              </div>
+              <div class="fp-progress-label">
+                <span id="fpProgressCurrent">0:00</span>
+                <span id="fpProgressTotal">0:00</span>
+              </div>
+            </div>
+
+            <!-- Tempo Control -->
+            <div class="speed-control" style="gap:2px">
+              <span class="fp-label" style="font-size:10px">Tempo</span>
+              <button class="speed-btn" data-duration="0.9" onclick="setTempo(0.9)" title="Slow (Vilambit) — 0.9s per note">🐢 Slow</button>
+              <button class="speed-btn active" data-duration="0.55" onclick="setTempo(0.55)" title="Medium (Madhya) — 0.55s per note">🎵 Med</button>
+              <button class="speed-btn" data-duration="0.3" onclick="setTempo(0.3)" title="Fast (Drut) — 0.3s per note">⚡ Fast</button>
+            </div>
+
+            <!-- Transpose Control -->
+            <div class="transpose-control">
+              <span class="fp-label" style="font-size:10px">Key</span>
+              <button class="tp-btn" onclick="transposeBy(-1)" title="Lower by 1 semitone">−</button>
+              <span class="tp-value" id="transposeDisplay">0</span>
+              <button class="tp-btn" onclick="transposeBy(1)" title="Raise by 1 semitone">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Truncation warning -->
+        <div class="warning-banner" id="truncationWarning" style="display:none;margin-bottom:14px">
+          ⚠️ Only the first <span id="truncatedDuration">60</span> seconds were processed (song exceeds free tier CPU limit).
+          The full 3+ minutes will be available in the production version.
+        </div>
+
+        <!-- Block count -->
+        <div class="block-count" id="blockCount" style="display:none"></div>
+
+        <!-- Blocks Container -->
+        <div id="blocksContainer">
+          <div class="empty-state" id="emptyState">
+            <div class="icon">🎶</div>
+            <p>Upload a song and generate the sargam sheet — blocks will appear here!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Toast Container ===== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // ===== State =====
+    const state = {
+      blocks: [],
+      currentBlockIndex: -1,
+      isPlaying: false,
+      isPaused: false,
+      geminiAvailable: false,
+      spleeterAvailable: false,
+      madmomAvailable: false,
+      uploadedFile: null,
+      progressAnimFrame: null,
+      audioContext: null,
+      totalDuration: 0,
+      // Sa state
+      saCandidates: [],
+      selectedSaHz: null,
+      // Flute playback state
+      noteDuration: 0.55,
+      transpose: 0,
+      flutePlaying: false,
+      flutePaused: false,
+      fluteCurrentBlockIdx: -1,
+    };
+
+    // ===== Sargam → Frequency Map =====
+    const SARGAM_FREQ = {
+      'Sa': 261.63, 're': 277.18, 'Re': 293.66, 'ga': 311.13, 'Ga': 329.63,
+      'Ma': 349.23, "Ma'": 369.99, 'Pa': 392.00, 'dha': 415.30, 'Dha': 440.00,
+      'ni': 466.16, 'Ni': 493.88,
+      "Sa'": 523.25, "Re'": 587.33, "Ga'": 659.25, "Ma''": 698.46, "Pa'": 783.99,
+      "Dha'": 880.00, "Ni'": 987.77, "Sa''": 1046.50,
+      '.Sa': 130.81, '.Re': 146.83, '.Ga': 164.81, '.Ma': 174.61,
+      '.Pa': 196.00, '.Dha': 220.00, '.Ni': 246.94,
+    };
+
+    const SARGAM_KEYS = Object.keys(SARGAM_FREQ);
+
+    // ===== Core Audio Helpers =====
+    function getAudioContext() {
+      if (!state.audioContext) {
+        state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (state.audioContext.state === 'suspended') {
+        state.audioContext.resume();
+      }
+      return state.audioContext;
+    }
+
+    /**
+     * Parse a sargam token and return frequency, isLong, ornament info.
+     */
+    function parseSargamToken(token) {
+      token = token.trim();
+      if (!token) return null;
+
+      // Detect dynamics: (soft), (loud)
+      let dynamics = 'normal';
+      token = token.replace(/\\(soft\\)/g, '').replace(/\\(loud\\)/g, '').trim();
+
+      // Detect ornaments
+      let ornament = '';
+      if (token.includes('~~~')) {
+        ornament = 'gamak';
+        token = token.replace(/~~~/g, '');
+      } else if (token.includes('~')) {
+        ornament = 'meend';
+        token = token.replace(/~/g, '');
+      }
+
+      if (!token) return null;
+
+      // ----- Step 1: Check if the EXACT token is already in the map -----
+      {
+        const exact = SARGAM_FREQ[token] || null;
+        if (exact) {
+          const alphaOnly = token.replace(/[^A-Za-z]/g, '');
+          const isLong = alphaOnly.length > 0 && alphaOnly === alphaOnly.toUpperCase();
+          return { frequency: exact, isLong, dynamics, ornament };
+        }
+        const cap = token.charAt(0).toUpperCase() + token.slice(1).toLowerCase();
+        const capMatch = SARGAM_FREQ[cap] || null;
+        if (capMatch) {
+          const alphaOnly = token.replace(/[^A-Za-z]/g, '');
+          const isLong = alphaOnly.length > 0 && alphaOnly === alphaOnly.toUpperCase();
+          return { frequency: capMatch, isLong, dynamics, ornament };
+        }
+      }
+
+      // ----- Step 2: Not found exactly --- handle lower/upper octave -----
+      let octaveMul = 1;
+      let raw = token;
+
+      while (raw.startsWith('.')) {
+        octaveMul *= 0.5;
+        raw = raw.slice(1);
+      }
+
+      const apostropheCount = (raw.match(/'/g) || []).length;
+      if (apostropheCount >= 2) {
+        octaveMul *= 2;
+        raw = raw.replace(/'/g, '');
+      } else if (apostropheCount === 1) {
+        octaveMul *= 2;
+        raw = raw.replace(/'/g, '');
+      }
+
+      // ----- Step 3: Look up the base note -----
+      let freq = SARGAM_FREQ[raw] || null;
+      if (!freq) {
+        const cap = raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
+        freq = SARGAM_FREQ[cap] || null;
+      }
+      if (!freq) {
+        const lower = raw.toLowerCase();
+        for (const key of SARGAM_KEYS) {
+          if (key.toLowerCase() === lower) {
+            freq = SARGAM_FREQ[key];
+            break;
+          }
+        }
+      }
+      if (!freq) {
+        const first2 = raw.slice(0, 2).toLowerCase();
+        for (const key of SARGAM_KEYS) {
+          if (key.toLowerCase() === first2 || key.toLowerCase().startsWith(first2)) {
+            freq = SARGAM_FREQ[key];
+            break;
+          }
+        }
+      }
+
+      if (freq) {
+        const alphaOnly = raw.replace(/[^A-Za-z]/g, '');
+        const isLong = alphaOnly.length > 0 && alphaOnly === alphaOnly.toUpperCase();
+        return { frequency: freq * octaveMul, isLong, dynamics, ornament };
+      }
+
+      return null;
+    }
+
+    function parseSargamLine(sargamStr) {
+      if (!sargamStr || sargamStr.trim() === '') return [];
+      const tokens = sargamStr.split(/\s+/).filter(t => t.length > 0);
+      const result = [];
+      for (let i = 0; i < tokens.length; i++) {
+        const token = tokens[i];
+        const p = parseSargamToken(token);
+        if (p) {
+          let dynamics = p.dynamics || 'normal';
+          if (i + 1 < tokens.length) {
+            const nextTok = tokens[i + 1].toLowerCase();
+            if (nextTok === '(soft)' || nextTok === '(loud)') {
+              dynamics = nextTok === '(soft)' ? 'soft' : 'loud';
+              i++;
+            }
+          }
+          result.push({
+            token: token,
+            frequency: p.frequency,
+            isLong: p.isLong,
+            duration: p.isLong ? 1.0 : 0.4,
+            dynamics: dynamics,
+            ornament: p.ornament || '',
+          });
+        }
+      }
+      return result;
+    }
+
+    // ===== Oscillator Management =====
+    const activeNodes = [];
+
+    function registerNode(node) {
+      activeNodes.push(node);
+      if (node.stop) {
+        const orig = node.stop.bind(node);
+        node.stop = function(t) {
+          const idx = activeNodes.indexOf(node);
+          if (idx >= 0) activeNodes.splice(idx, 1);
+          return orig(t);
+        };
+      }
+    }
+
+    function stopAllActiveNodes() {
+      for (const node of activeNodes) {
+        try {
+          if (node.stop) node.stop(0);
+          if (node.disconnect) node.disconnect();
+        } catch (e) {}
+      }
+      activeNodes.length = 0;
+    }
+
+    // ===== Audio Engine Setup =====
+    let reverbNode = null;
+
+    function createReverb(ctx, durationSec, decay) {
+      const sampleRate = ctx.sampleRate;
+      const length = sampleRate * durationSec;
+      const buffer = ctx.createBuffer(2, length, sampleRate);
+      for (let ch = 0; ch < 2; ch++) {
+        const data = buffer.getChannelData(ch);
+        for (let i = 0; i < length; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
+        }
+      }
+      const conv = ctx.createConvolver();
+      conv.buffer = buffer;
+      return conv;
+    }
+
+    function getReverbNode(ctx) {
+      if (!reverbNode) {
+        reverbNode = createReverb(ctx, 0.5, 3);
+      }
+      return reverbNode;
+    }
+
+    // ===== Flute Synthesis v2 (Bansuri) =====
+    /**
+     * Bansuri synthesis with 5 harmonic partials, breath chiff, portamento.
+     *
+     * Harmonics (bansuri-style):
+     *   1x (fundamental)   gain 0.50
+     *   2x (octave)       gain 0.25
+     *   3x (twelfth)      gain 0.12
+     *   4x (double oct.)  gain 0.06
+     *   5.5x             gain 0.03
+     *
+     * Breath chiff: 20ms highpass-filtered noise burst at attack
+     * Portamento: exponential pitch glide over 80ms (for meend)
+     * ADSR: 50ms attack, 30ms decay, sustain 0.6, 50ms release
+     * Vibrato: 5.5Hz LFO, depth 3Hz, delayed 0.08s
+     */
+    let chiffNoiseBuffer = null;
+
+    function getChiffNoiseBuffer(ctx) {
+      if (chiffNoiseBuffer) return chiffNoiseBuffer;
+      const sr = ctx.sampleRate;
+      const len = sr * 0.1; // 100ms buffer (more than enough)
+      const buf = ctx.createBuffer(1, len, sr);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      chiffNoiseBuffer = buf;
+      return buf;
+    }
+
+    // Harmonic partial ratios and gains for bansuri timbre
+    const BANSURI_PARTIALS = [
+      { ratio: 1.0, gain: 0.50 },
+      { ratio: 2.0, gain: 0.25 },
+      { ratio: 3.0, gain: 0.12 },
+      { ratio: 4.0, gain: 0.06 },
+      { ratio: 5.5, gain: 0.03 },
+    ];
+
+    function playFluteNote(ctx, freq, startTime, duration, dynamics, opts) {
+      opts = opts || {};
+      const gainVariation = opts.gainVariation || 1;
+      const hasPortamento = opts.portamento || false;
+      const portamentoTargetFreq = opts.portamentoTarget || freq;
+
+      // Base gain with dynamics
+      const gainBase = dynamics === 'soft' ? 0.50 : dynamics === 'loud' ? 0.85 : 0.65;
+      const peakGain = Math.min(gainBase * gainVariation, 1.0);
+
+      const endTime = startTime + duration;
+      const sampleRate = ctx.sampleRate;
+
+      // ===== 1. Five harmonic partials =====
+      const oscillators = [];
+      const oscGains = [];
+
+      for (const partial of BANSURI_PARTIALS) {
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        const partFreq = freq * partial.ratio;
+
+        // Portamento: exponential pitch glide over 80ms for meend
+        if (hasPortamento) {
+          const glideStartFreq = freq * partial.ratio;
+          const glideEndFreq = portamentoTargetFreq * partial.ratio;
+          const glideDuration = 0.08; // 80ms
+          const glideEndTime = startTime + glideDuration;
+
+          osc.frequency.setValueAtTime(glideStartFreq, startTime);
+          // Exponential ramp to target
+          osc.frequency.exponentialRampToValueAtTime(Math.max(glideEndFreq, 20), glideEndTime);
+          osc.frequency.setValueAtTime(glideEndFreq, glideEndTime);
+        } else {
+          osc.frequency.setValueAtTime(partFreq, startTime);
+        }
+
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(partial.gain, startTime);
+
+        osc.connect(gain);
+        oscillators.push(osc);
+        oscGains.push(gain);
+      }
+
+      // ===== 2. Breath chiff: 20ms highpass noise burst at attack =====
+      const chiffSource = ctx.createBufferSource();
+      chiffSource.buffer = getChiffNoiseBuffer(ctx);
+      const chiffHP = ctx.createBiquadFilter();
+      chiffHP.type = 'highpass';
+      chiffHP.frequency.setValueAtTime(3000, startTime);
+      chiffHP.Q.setValueAtTime(0.5, startTime);
+      const chiffGain = ctx.createGain();
+      // Very short burst: 0 to 0.15 over 5ms, then fade to 0 by 20ms
+      const chiffAttackEnd = startTime + 0.005;
+      const chiffReleaseStart = startTime + 0.008;
+      const chiffEnd = startTime + 0.025;
+      chiffGain.gain.setValueAtTime(0, startTime);
+      chiffGain.gain.linearRampToValueAtTime(0.15, chiffAttackEnd);
+      chiffGain.gain.linearRampToValueAtTime(0.02, chiffReleaseStart);
+      chiffGain.gain.linearRampToValueAtTime(0, chiffEnd);
+      chiffSource.connect(chiffHP);
+      chiffHP.connect(chiffGain);
+
+      // ===== 3. Master bandpass filter (bansuri resonance) =====
+      const masterFilter = ctx.createBiquadFilter();
+      masterFilter.type = 'bandpass';
+      masterFilter.frequency.setValueAtTime(freq * 2.5, startTime);
+      masterFilter.Q.setValueAtTime(1.2, startTime);
+
+      // ===== 4. ADSR envelope (50ms attack, 30ms decay, sustain 0.6, 50ms release) =====
+      const env = ctx.createGain();
+      const attackEnd = startTime + 0.050;
+      const decayEnd = attackEnd + 0.030;
+      const sustainLevel = 0.6;
+      const releaseStart = Math.max(endTime - 0.050, decayEnd);
+      const noteEnd = releaseStart + 0.050;
+
+      env.gain.setValueAtTime(0, startTime);
+      env.gain.linearRampToValueAtTime(peakGain, attackEnd);
+      env.gain.linearRampToValueAtTime(peakGain * sustainLevel, decayEnd);
+      env.gain.setValueAtTime(peakGain * sustainLevel, releaseStart);
+      env.gain.exponentialRampToValueAtTime(0.001, noteEnd);
+
+      // ===== 5. Vibrato LFO (5.5Hz, depth 3Hz, delayed 0.08s) =====
+      const vibratoLfo = ctx.createOscillator();
+      vibratoLfo.type = 'sine';
+      vibratoLfo.frequency.setValueAtTime(5.5, startTime);
+      const vibratoGain = ctx.createGain();
+      vibratoGain.gain.setValueAtTime(0, startTime);
+      vibratoGain.gain.linearRampToValueAtTime(3, startTime + 0.08);
+      vibratoGain.gain.setValueAtTime(3, noteEnd);
+      vibratoLfo.connect(vibratoGain);
+      vibratoGain.connect(oscillators[0].frequency); // Vibrato on fundamental only
+
+      // ===== 6. Route signal chain =====
+      // All oscillators → masterFilter → env → destination
+      // Chiff → env → destination
+      for (const gain of oscGains) {
+        gain.connect(masterFilter);
+      }
+      masterFilter.connect(env);
+      chiffGain.connect(env);
+      env.connect(ctx.destination);
+
+      // ===== 7. Register and schedule =====
+      for (const osc of oscillators) {
+        registerNode(osc);
+        osc.start(startTime);
+        osc.stop(noteEnd + 0.02);
+      }
+      registerNode(chiffSource);
+      registerNode(vibratoLfo);
+      chiffSource.start(startTime);
+      chiffSource.stop(noteEnd + 0.02);
+      vibratoLfo.start(startTime);
+      vibratoLfo.stop(noteEnd + 0.02);
+    }
+
+    // ===== File Upload =====
+    const uploadZone = document.getElementById('uploadZone');
+    const audioInput = document.getElementById('audioInput');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+
+    audioInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        state.uploadedFile = file;
+        fileName.textContent = `${file.name} (${(file.size / (1024*1024)).toFixed(1)} MB)`;
+        uploadZone.classList.add('has-file');
+        // Show Sa detect button once file is loaded
+        document.getElementById('detectSaBtn').style.display = 'inline-flex';
+      }
+    });
+
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('drag-over');
+    });
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('drag-over');
+    });
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('audio/')) {
+        state.uploadedFile = file;
+        fileName.textContent = `${file.name} (${(file.size / (1024*1024)).toFixed(1)} MB)`;
+        uploadZone.classList.add('has-file');
+        audioInput.files = e.dataTransfer.files;
+        document.getElementById('detectSaBtn').style.display = 'inline-flex';
+      } else {
+        showToast('Please drop an audio file (MP3, WAV, etc.)', 'error');
+      }
+    });
+
+    // ===== Sa Candidate Detection UI =====
+    async function detectSaCandidates() {
+      const file = state.uploadedFile;
+      if (!file) {
+        showToast('Please upload an audio file first', 'error');
+        return;
+      }
+
+      const detectBtn = document.getElementById('detectSaBtn');
+      detectBtn.disabled = true;
+      detectBtn.textContent = '⏳ Detecting...';
+
+      const formData = new FormData();
+      formData.append('audio', file);
+
+      try {
+        const resp = await fetch('/api/sa-candidates', { method: 'POST', body: formData });
+        const data = await resp.json();
+
+        detectBtn.disabled = false;
+        detectBtn.textContent = '🎼 Detect Sa Candidates';
+
+        if (data.success && data.candidates && data.candidates.length > 0) {
+          state.saCandidates = data.candidates;
+          renderSaCandidates(data.candidates);
+          document.getElementById('saSelector').classList.add('active');
+          showToast(`🎼 Detected ${data.candidates.length} Sa candidates`, 'success');
+        } else {
+          showToast('Could not detect Sa candidates. Using auto-detect.', 'info');
+          document.getElementById('saSelector').classList.add('active');
+        }
+      } catch (err) {
+        detectBtn.disabled = false;
+        detectBtn.textContent = '🎼 Detect Sa Candidates';
+        showToast('Sa detection failed: ' + err.message, 'error');
+      }
+    }
+
+    function renderSaCandidates(candidates) {
+      const container = document.getElementById('saCandidates');
+      container.innerHTML = candidates.map((c, i) => `
+        <button class="sa-candidate-btn ${i === 0 ? 'selected' : ''}"
+                onclick="selectSaCandidate(${i}, ${c.frequency})">
+          <span>🎼 ${c.note_name}</span>
+          <span class="freq">${c.frequency.toFixed(1)} Hz</span>
+          <span class="conf-badge">${(c.confidence * 100).toFixed(0)}%</span>
+        </button>
+      `).join('');
+
+      // Auto-select top candidate
+      if (candidates.length > 0) {
+        selectSaCandidate(0, candidates[0].frequency);
+      }
+    }
+
+    function selectSaCandidate(index, frequency) {
+      state.selectedSaHz = frequency;
+      document.querySelectorAll('.sa-candidate-btn').forEach((btn, i) => {
+        btn.classList.toggle('selected', i === index);
+      });
+      // Clear manual dropdown
+      document.getElementById('saManualSelect').value = '';
+
+      const info = document.getElementById('saSelectedInfo');
+      info.style.display = 'flex';
+      document.getElementById('saSelectedValue').textContent =
+        `${frequency.toFixed(1)} Hz (${state.saCandidates[index]?.note_name || '?'})`;
+    }
+
+    document.getElementById('saManualSelect').addEventListener('change', function() {
+      const val = this.value;
+      if (val) {
+        state.selectedSaHz = parseFloat(val);
+        // Deselect all candidate buttons
+        document.querySelectorAll('.sa-candidate-btn').forEach(btn => btn.classList.remove('selected'));
+
+        const info = document.getElementById('saSelectedInfo');
+        info.style.display = 'flex';
+        const selectedText = this.options[this.selectedIndex].text;
+        document.getElementById('saSelectedValue').textContent =
+          `${state.selectedSaHz.toFixed(1)} Hz (${selectedText})`;
+      } else {
+        state.selectedSaHz = null;
+        document.getElementById('saSelectedInfo').style.display = 'none';
+      }
+    });
+
+    // ===== Toast =====
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
+    // ===== Loading Steps =====
+    function updateLoadingStep(stepId, status) {
+      const el = document.getElementById(stepId);
+      if (el) el.className = `loading-step ${status}`;
+    }
+
+    // ===== Analyze Song =====
+    async function analyzeSong() {
+      const file = state.uploadedFile;
+      if (!file) {
+        showToast('Please upload an audio file first', 'error');
+        return;
+      }
+
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const resultsSection = document.getElementById('resultsSection');
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      analyzeBtn.disabled = true;
+      loadingOverlay.classList.add('active');
+      resultsSection.classList.remove('active');
+
+      ['step1','step2','step3','step4','step5'].forEach(s => updateLoadingStep(s, ''));
+
+      const formData = new FormData();
+      formData.append('audio', file);
+      formData.append('song_name', document.getElementById('songName').value.trim());
+      formData.append('lyrics', document.getElementById('lyricsInput').value.trim());
+      formData.append('use_gemini', state.geminiAvailable ? 'true' : 'false');
+
+      // Pass Sa override if selected
+      if (state.selectedSaHz) {
+        formData.append('sa_hz', state.selectedSaHz.toString());
+      }
+
+      try {
+        updateLoadingStep('step1', 'active');
+        await sleep(300);
+        updateLoadingStep('step1', 'done');
+        updateLoadingStep('step2', 'active');
+        await sleep(300);
+        updateLoadingStep('step2', 'done');
+        updateLoadingStep('step3', 'active');
+
+        const response = await fetch('/api/analyze', { method: 'POST', body: formData });
+        const data = await response.json();
+
+        updateLoadingStep('step3', 'done');
+        updateLoadingStep('step4', 'active');
+        await sleep(300);
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Analysis failed');
+        }
+
+        updateLoadingStep('step4', 'done');
+        updateLoadingStep('step5', 'active');
+        await sleep(300);
+        updateLoadingStep('step5', 'done');
+
+        await sleep(400);
+        loadingOverlay.classList.remove('active');
+        analyzeBtn.disabled = false;
+
+        renderResults(data);
+      } catch (err) {
+        loadingOverlay.classList.remove('active');
+        analyzeBtn.disabled = false;
+        showToast(err.message || 'An error occurred during analysis', 'error');
+      }
+    }
+
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    // ===== Render Results =====
+    function renderResults(data) {
+      const resultsSection = document.getElementById('resultsSection');
+      const saBadge = document.getElementById('saBadge');
+      const emptyState = document.getElementById('emptyState');
+
+      state.blocks = data.time_blocks || [];
+      state.totalDuration = data.duration_seconds || 0;
+
+      if (state.blocks.length === 0 && data.notation_lines && data.notation_lines.length > 0) {
+        state.blocks = data.notation_lines.map((line, i) => ({
+          start_time: line.start_time || (i * 3),
+          end_time: line.end_time || ((i + 1) * 3),
+          type: line.lyrics ? 'Vocal' : 'Instrumental',
+          sargam: line.sargam || '',
+          notes: line.notes || [],
+          lyrics: line.lyrics || '',
+        }));
+        state.totalDuration = state.blocks.length > 0 ? state.blocks[state.blocks.length - 1].end_time : 0;
+      }
+
+      if (data.sa_info) {
+        saBadge.style.display = 'flex';
+        document.getElementById('saNote').textContent = data.sa_note || 'C4';
+        document.getElementById('saFreq').textContent = `(${data.sa_frequency?.toFixed(1) || '?'} Hz)`;
+
+        // Auto-calculate transpose offset from detected Sa vs C4
+        if (data.sa_frequency) {
+          const semitonesFromC4 = 12 * Math.log2(data.sa_frequency / 261.63);
+          state.transpose = Math.round(semitonesFromC4);
+          state.transpose = Math.max(-6, Math.min(6, state.transpose));
+          document.getElementById('transposeDisplay').textContent = state.transpose > 0 ? `+${state.transpose}` : state.transpose;
+        }
+
+        // Spleeter/madmom badges
+        const spleeterEl = document.getElementById('spleeterBadge');
+        if (data.spleeter_available) {
+          spleeterEl.style.display = 'inline-flex';
+          spleeterEl.className = 'tech-badge available';
+          spleeterEl.textContent = 'Spleeter ✅';
+        } else {
+          spleeterEl.style.display = 'inline-flex';
+          spleeterEl.className = 'tech-badge unavailable';
+          spleeterEl.textContent = 'Spleeter ❌';
+        }
+
+        const madmomEl = document.getElementById('madmomBadge');
+        if (data.madmom_available) {
+          madmomEl.style.display = 'inline-flex';
+          madmomEl.className = 'tech-badge available';
+          madmomEl.textContent = 'madmom ✅';
+        } else {
+          madmomEl.style.display = 'inline-flex';
+          madmomEl.className = 'tech-badge unavailable';
+          madmomEl.textContent = 'madmom ❌';
+        }
+      }
+
+      const geminiBadge = document.getElementById('geminiBadge');
+      if (data.gemini_enhanced) {
+        geminiBadge.style.display = 'inline-flex';
+        geminiBadge.className = 'gemini-badge on';
+        geminiBadge.textContent = '✦ Gemini Enhanced';
+      }
+
+      // Show truncation warning if song was cut at 60s
+      const truncWarning = document.getElementById('truncationWarning');
+      if (data.truncated) {
+        truncWarning.style.display = 'flex';
+        document.getElementById('truncatedDuration').textContent = data.max_duration_seconds || 60;
+      } else {
+        truncWarning.style.display = 'none';
+      }
+
+      resultsSection.classList.add('active');
+
+      if (state.blocks.length === 0) {
+        emptyState.style.display = 'block';
+        document.getElementById('flutePlayBar').classList.remove('active');
+        document.getElementById('blockCount').style.display = 'none';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      document.getElementById('flutePlayBar').classList.add('active');
+
+      const blockCount = document.getElementById('blockCount');
+      blockCount.style.display = 'block';
+      const vocalCount = state.blocks.filter(b => b.type === 'Vocal').length;
+      const instrCount = state.blocks.filter(b => b.type === 'Instrumental').length;
+      blockCount.textContent = `${state.blocks.length} blocks · ${vocalCount} vocal · ${instrCount} instrumental · ${formatTime(state.totalDuration)} total`;
+
+      document.getElementById('fpProgressTotal').textContent = formatTime(state.totalDuration);
+
+      renderBlocks();
+      resetFluteUI();
+      showToast(`✨ Generated ${state.blocks.length} time blocks with sargam notation!`, 'success');
+    }
+
+    function renderBlocks() {
+      const container = document.getElementById('blocksContainer');
+      const emptyState = container.querySelector('.empty-state');
+      if (emptyState) emptyState.style.display = 'none';
+
+      container.innerHTML = state.blocks.map((block, idx) => {
+        const isVocal = block.type === 'Vocal';
+        const typeClass = isVocal ? 'vocal' : 'instrumental';
+        const sargam = block.sargam || '';
+        const lyrics = block.lyrics || '';
+
+        const coloredSargam = colorizeSargam(sargam, idx);
+
+        let contentHtml;
+        if (isVocal) {
+          contentHtml = `
+            <div class="block-content vocal-content">
+              <div class="lyrics-side">
+                <div class="block-lyrics">${escapeHtml(lyrics)}</div>
+              </div>
+              <div class="sargam-side">
+                <div class="block-sargam" id="blockSargam-${idx}">${coloredSargam}</div>
+              </div>
+            </div>
+          `;
+        } else {
+          contentHtml = `
+            <div class="block-content">
+              <div class="block-sargam instr-only" id="blockSargam-${idx}">${coloredSargam || '<span style="color:var(--text-muted);font-size:12px">— silent —</span>'}</div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="block-card ${typeClass}" data-index="${idx}" id="block-${idx}">
+            <div class="block-index">
+              <span class="time-range">${formatTime(block.start_time)} – ${formatTime(block.end_time)}</span>
+              <span class="block-type-badge ${typeClass}">${isVocal ? 'Vocal' : 'Instr'}</span>
+            </div>
+            ${contentHtml}
+            <button class="block-play-btn" id="playBtn-${idx}" onclick="playSingleBlock(${idx})" title="Play this block">▶</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function colorizeSargam(sargamStr, blockIdx) {
+      if (!sargamStr) return '';
+      let noteCounter = 0;
+      return sargamStr.replace(/([\\.']*[SsRrGgMmPpDdNn][aAeE]?'*[\\.']*)/g, (match) => {
+        const noteClass = getSargamNoteClass(match);
+        const isLong = /^[A-Z]+$/.test(match.replace(/[^A-Za-z']/g, ''));
+        const isOrnament = match.includes('~') || match.includes('~~~');
+        const noteIdx = noteCounter++;
+        let extraClass = '';
+        if (isOrnament) {
+          if (match.includes('~~~')) extraClass = ' ornament-gamak';
+          else extraClass = ' ornament-meend';
+        }
+        return `<span class="sargam-token ${noteClass}${isLong ? ' long-note' : ''}${extraClass}" data-block="${blockIdx}" data-note="${noteIdx}">${match}</span>`;
+      });
+    }
+
+    function getSargamNoteClass(note) {
+      const normalized = note.replace(/[.'\s~]/g, '').toLowerCase();
+      if (normalized.startsWith('sa')) return 'note-sa';
+      if (normalized.startsWith('re')) return 'note-re';
+      if (normalized.startsWith('ga')) return 'note-ga';
+      if (normalized.startsWith('ma')) return 'note-ma';
+      if (normalized.startsWith('pa')) return 'note-pa';
+      if (normalized.startsWith('dha')) return 'note-dha';
+      if (normalized.startsWith('ni')) return 'note-ni';
+      return '';
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function formatTime(seconds) {
+      if (seconds == null || seconds < 0) return '0:00';
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+
+    // ===== Single Block Playback =====
+    function playSingleBlock(index) {
+      if (state.flutePlaying) {
+        stopFlutePlay();
+      }
+      const ctx = getAudioContext();
+      const block = state.blocks[index];
+      if (!block || !block.sargam) return;
+
+      stopAllActiveNodes();
+      clearNoteHighlights();
+
+      const notes = parseSargamLine(block.sargam);
+      if (notes.length === 0) return;
+
+      const now = ctx.currentTime;
+      let t = now;
+      const blockDuration = block.end_time - block.start_time || 2;
+      const baseSpacing = Math.max(blockDuration / notes.length, 0.08);
+
+      highlightBlock(index, 'playing');
+
+      for (let i = 0; i < notes.length; i++) {
+        const n = notes[i];
+        const freq = n.frequency * Math.pow(2, state.transpose / 12);
+        const noteDuration = n.isLong ? 1.0 : 0.4;
+        const jitter = i > 0 ? (Math.random() - 0.5) * 0.04 : 0;
+        const scheduledTime = t + jitter;
+        const gainVar = 1 + (Math.random() - 0.5) * 0.1;
+
+        // Portamento for meend notes: next note's freq as target
+        const hasPortamento = n.ornament === 'meend';
+        const nextFreq = i < notes.length - 1
+          ? notes[i + 1].frequency * Math.pow(2, state.transpose / 12)
+          : freq;
+
+        playFluteNote(ctx, freq, scheduledTime, noteDuration, n.dynamics || 'normal', {
+          gainVariation: gainVar,
+          portamento: hasPortamento,
+          portamentoTarget: nextFreq,
+        });
+
+        scheduleNoteHighlight(index, i, scheduledTime, now);
+
+        const legatoAdvance = i < notes.length - 1 ? 0.03 : 0;
+        t += baseSpacing - legatoAdvance;
+      }
+    }
+
+    // ===== Flute Playback Engine (Full Song) =====
+    let fullSongSchedule = [];
+    let fullSongDuration = 0;
+    let fullSongAudioStartTime = 0;
+    let fullSongAnimFrame = null;
+    let fullSongHighlightTimers = [];
+
+    function toggleFlutePlay() {
+      if (state.flutePlaying) {
+        if (state.flutePaused) {
+          resumeFlutePlay();
+        } else {
+          pauseFlutePlay();
+        }
+      } else {
+        startFlutePlay();
+      }
+    }
+
+    function buildFullSongSchedule() {
+      const schedule = [];
+      const transpose = state.transpose;
+      const noteSlot = state.noteDuration;
+      const legatoOverlap = 0.04;
+      let currentTime = 0;
+
+      for (let b = 0; b < state.blocks.length; b++) {
+        const block = state.blocks[b];
+        const notes = parseSargamLine(block.sargam);
+
+        if (notes.length === 0) {
+          schedule.push({
+            time: currentTime,
+            duration: 0.5,
+            blockIdx: b,
+            noteIdx: -1,
+            freq: 0,
+            dynamics: 'normal',
+            gainVar: 1,
+            isSilent: true,
+            portamento: false,
+            portamentoTarget: 0,
+          });
+          currentTime += 0.5;
+          continue;
+        }
+
+        for (let i = 0; i < notes.length; i++) {
+          const n = notes[i];
+          const notePlayDuration = (n.isLong ? noteSlot * 1.4 : noteSlot);
+          const jitter = i > 0 ? Math.random() * 0.018 : 0;
+          const time = currentTime + jitter;
+          const gainVar = 0.92 + Math.random() * 0.16;
+
+          // Portamento: if meend ornament, next note freq is target
+          const hasPortamento = n.ornament === 'meend';
+          const nextFreq = i < notes.length - 1
+            ? notes[i + 1].frequency * Math.pow(2, transpose / 12)
+            : n.frequency * Math.pow(2, transpose / 12);
+
+          schedule.push({
+            time: time,
+            duration: notePlayDuration,
+            blockIdx: b,
+            noteIdx: i,
+            freq: n.frequency * Math.pow(2, transpose / 12),
+            dynamics: n.dynamics || 'normal',
+            gainVar: gainVar,
+            isSilent: false,
+            portamento: hasPortamento,
+            portamentoTarget: nextFreq,
+          });
+
+          currentTime += noteSlot - legatoOverlap;
+        }
+
+        currentTime += 0.08;
+      }
+
+      return { schedule, totalDuration: currentTime };
+    }
+
+    function startFlutePlay() {
+      if (state.blocks.length === 0) return;
+
+      stopFlutePlay();
+      const ctx = getAudioContext();
+
+      const result = buildFullSongSchedule();
+      fullSongSchedule = result.schedule;
+      fullSongDuration = result.totalDuration;
+
+      state.flutePlaying = true;
+      state.flutePaused = false;
+      clearNoteHighlights();
+      highlightBlock(-1, '');
+
+      document.getElementById('fpPlayBtn').textContent = '⏸';
+      document.getElementById('fpPlayBtn').classList.add('playing');
+      document.getElementById('fpProgressTotal').textContent = formatTime(fullSongDuration);
+
+      const now = ctx.currentTime;
+      fullSongAudioStartTime = now;
+
+      for (const note of fullSongSchedule) {
+        if (note.isSilent) continue;
+        const absTime = now + note.time;
+        playFluteNote(ctx, note.freq, absTime, note.duration, note.dynamics, {
+          gainVariation: note.gainVar,
+          portamento: note.portamento,
+          portamentoTarget: note.portamentoTarget,
+        });
+      }
+
+      fullSongHighlightTimers = [];
+      for (const note of fullSongSchedule) {
+        if (note.isSilent) continue;
+        const timer = setTimeout(() => {
+          highlightFluteNote(note.blockIdx, note.noteIdx);
+        }, note.time * 1000);
+        fullSongHighlightTimers.push(timer);
+      }
+
+      startFullSongAnimLoop();
+    }
+
+    function highlightFluteNote(blockIdx, noteIdx) {
+      clearNoteHighlights();
+      highlightBlock(blockIdx, 'playing-active');
+      const noteEl = document.querySelector(`#blockSargam-${blockIdx} .sargam-token[data-note="${noteIdx}"]`);
+      if (noteEl) noteEl.classList.add('note-active');
+    }
+
+    function pauseFlutePlay() {
+      for (const t of fullSongHighlightTimers) clearTimeout(t);
+      fullSongHighlightTimers = [];
+
+      try {
+        const ctx = getAudioContext();
+        ctx.suspend();
+      } catch (e) {}
+
+      state.flutePaused = true;
+      document.getElementById('fpPlayBtn').textContent = '▶';
+      document.getElementById('fpPlayBtn').classList.remove('playing');
+    }
+
+    function resumeFlutePlay() {
+      const ctx = getAudioContext();
+      const elapsed = ctx.currentTime - fullSongAudioStartTime;
+
+      fullSongHighlightTimers = [];
+      for (const note of fullSongSchedule) {
+        if (note.isSilent) continue;
+        const remaining = note.time - elapsed;
+        if (remaining <= 0) continue;
+        const timer = setTimeout(() => {
+          highlightFluteNote(note.blockIdx, note.noteIdx);
+        }, remaining * 1000);
+        fullSongHighlightTimers.push(timer);
+      }
+
+      try {
+        ctx.resume();
+      } catch (e) {}
+
+      state.flutePaused = false;
+      document.getElementById('fpPlayBtn').textContent = '⏸';
+      document.getElementById('fpPlayBtn').classList.add('playing');
+    }
+
+    function stopFlutePlay() {
+      if (fullSongAnimFrame) {
+        cancelAnimationFrame(fullSongAnimFrame);
+        fullSongAnimFrame = null;
+      }
+
+      state.flutePlaying = false;
+      state.flutePaused = false;
+      state.fluteCurrentBlockIdx = -1;
+
+      stopAllActiveNodes();
+
+      for (const t of fullSongHighlightTimers) clearTimeout(t);
+      fullSongHighlightTimers = [];
+
+      if (state.audioContext && state.audioContext.state !== 'closed') {
+        state.audioContext.close().catch(() => {});
+        state.audioContext = null;
+      }
+
+      clearNoteHighlights();
+      highlightBlock(-1, '');
+      resetFluteUI();
+    }
+
+    function finishFlutePlay() {
+      state.flutePlaying = false;
+      state.flutePaused = false;
+
+      for (const t of fullSongHighlightTimers) clearTimeout(t);
+      fullSongHighlightTimers = [];
+
+      if (fullSongAnimFrame) {
+        cancelAnimationFrame(fullSongAnimFrame);
+        fullSongAnimFrame = null;
+      }
+
+      clearNoteHighlights();
+      highlightBlock(-1, '');
+      document.getElementById('fpProgressFill').style.width = '100%';
+      document.getElementById('fpProgressCurrent').textContent = formatTime(state.totalDuration);
+      document.getElementById('fpPlayBtn').textContent = '▶';
+      document.getElementById('fpPlayBtn').classList.remove('playing');
+      showToast('✅ Flute playback complete!', 'success');
+    }
+
+    function startFullSongAnimLoop() {
+      if (fullSongAnimFrame) cancelAnimationFrame(fullSongAnimFrame);
+
+      function tick() {
+        if (!state.flutePlaying) {
+          fullSongAnimFrame = null;
+          return;
+        }
+
+        if (state.flutePaused) {
+          fullSongAnimFrame = requestAnimationFrame(tick);
+          return;
+        }
+
+        const ctx = getAudioContext();
+        const elapsed = ctx.currentTime - fullSongAudioStartTime;
+        const progress = Math.min(elapsed / fullSongDuration, 1);
+        const currentSec = progress * (state.totalDuration || fullSongDuration);
+
+        document.getElementById('fpProgressFill').style.width = `${progress * 100}%`;
+        document.getElementById('fpProgressCurrent').textContent = formatTime(currentSec);
+
+        if (fullSongSchedule.length > 0) {
+          let currentBlockIdx = -1;
+          let currentNoteIdx = -1;
+          for (const note of fullSongSchedule) {
+            if (elapsed >= note.time && elapsed < note.time + note.duration) {
+              currentBlockIdx = note.blockIdx;
+              currentNoteIdx = note.noteIdx;
+              break;
+            }
+          }
+
+          if (currentBlockIdx >= 0) {
+            highlightBlock(currentBlockIdx, 'playing-active');
+            if (currentNoteIdx >= 0) {
+              document.querySelectorAll(`.sargam-token`).forEach(el => el.classList.remove('note-active'));
+              const noteEl = document.querySelector(`#blockSargam-${currentBlockIdx} .sargam-token[data-note="${currentNoteIdx}"]`);
+              if (noteEl) noteEl.classList.add('note-active');
+            }
+          } else {
+            highlightBlock(-1, '');
+          }
+        }
+
+        if (progress >= 1) {
+          finishFlutePlay();
+          return;
+        }
+
+        fullSongAnimFrame = requestAnimationFrame(tick);
+      }
+
+      fullSongAnimFrame = requestAnimationFrame(tick);
+    }
+
+    function resetFluteUI() {
+      document.getElementById('fpPlayBtn').textContent = '▶';
+      document.getElementById('fpPlayBtn').classList.remove('playing');
+      document.getElementById('fpProgressFill').style.width = '0%';
+      document.getElementById('fpProgressCurrent').textContent = '0:00';
+    }
+
+    function highlightBlock(index, className) {
+      document.querySelectorAll('.block-card').forEach((card, i) => {
+        card.className = card.className.replace(/playing-active|playing/g, '').trim();
+        if (i === index && className) {
+          card.classList.add(className);
+        }
+      });
+      state.fluteCurrentBlockIdx = index >= 0 ? index : -1;
+    }
+
+    function clearNoteHighlights() {
+      document.querySelectorAll('.sargam-token.note-active').forEach(el => {
+        el.classList.remove('note-active');
+      });
+    }
+
+    function scheduleNoteHighlight(blockIdx, noteIdx, startTime, ctxNow) {
+      const delay = (startTime - ctxNow) * 1000;
+      setTimeout(() => {
+        if (state.flutePlaying) {
+          document.querySelectorAll(`#blockSargam-${blockIdx} .sargam-token`).forEach(el => {
+            el.classList.remove('note-active');
+          });
+          const el = document.querySelector(`#blockSargam-${blockIdx} .sargam-token[data-note="${noteIdx}"]`);
+          if (el) el.classList.add('note-active');
+        }
+      }, Math.max(0, delay));
+    }
+
+    function setTempo(duration) {
+      state.noteDuration = duration;
+      document.querySelectorAll('.speed-btn').forEach(btn => {
+        btn.classList.toggle('active', parseFloat(btn.dataset.duration) === duration);
+      });
+      if (state.flutePlaying) {
+        stopFlutePlay();
+        startFlutePlay();
+      }
+    }
+
+    function transposeBy(semitones) {
+      const newVal = Math.max(-6, Math.min(6, state.transpose + semitones));
+      if (newVal === state.transpose) return;
+      state.transpose = newVal;
+      document.getElementById('transposeDisplay').textContent = newVal > 0 ? `+${newVal}` : newVal;
+      if (state.flutePlaying) {
+        stopFlutePlay();
+        startFlutePlay();
+      }
+    }
+
+    // ===== Initialize =====
+    async function init() {
+      try {
+        const resp = await fetch('/api/config');
+        const config = await resp.json();
+        state.geminiAvailable = config.gemini_available;
+        state.spleeterAvailable = config.spleeter_available;
+        state.madmomAvailable = config.madmom_available;
+
+        const warning = document.getElementById('geminiWarning');
+        if (!state.geminiAvailable) {
+          warning.classList.add('active');
+        }
+      } catch (e) {
+        state.geminiAvailable = false;
+        document.getElementById('geminiWarning').classList.add('active');
+      }
+    }
+    init();
+  </script>
+</body>
+</html>

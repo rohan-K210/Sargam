@@ -1,4 +1,11 @@
 gradio
 librosa
 numpy
+scipy
 google-genai
+python-dotenv
+spleeter>=2.1.0,<2.5 ; python_version < '3.12'
+madmom>=0.16.1
+tensorflow>=2.10 ; python_version < '3.12'
+# Note: Spleeter/madmom require Python <3.12 on some platforms.
+# On Python 3.12+, these are gracefully handled as optional via try/except in melody.py
