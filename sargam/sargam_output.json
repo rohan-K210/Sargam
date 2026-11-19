@@ -1,0 +1,1264 @@
+{
+  "tonic": "D#5",
+  "tonic_hz": 626.3087158203125,
+  "tonic_confidence": 0.12485501170158386,
+  "tempo": "Drut",
+  "tempo_bpm": 144.2307692307691,
+  "instrument": "bansuri",
+  "instrument_confidence": 0.5,
+  "breaths": [],
+  "notes": [
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 0.5720000000000001,
+      "duration_sec": 0.15999999999999992,
+      "ornament": {
+        "type": "andolan",
+        "frequency_hz": 9.999999999999991,
+        "amplitude_cents": 50.96760232463202,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Dha",
+      "variant": "shuddha",
+      "octave": "Mandra",
+      "onset_sec": 0.732,
+      "duration_sec": 0.10000000000000009,
+      "ornament": {
+        "type": "kan",
+        "duration_sec": 0.10000000000000009,
+        "confidence": 0.7
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 0.8320000000000001,
+      "duration_sec": 0.32999999999999985,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -54.09850403010997,
+        "confidence": 0.27049252015054986
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 1.162,
+      "duration_sec": 0.8,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Pa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 1.962,
+      "duration_sec": 0.2100000000000002,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 2.172,
+      "duration_sec": 0.11999999999999966,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 804.1101074218699,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 2.352,
+      "duration_sec": 0.20000000000000018,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -374.80574663947954,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 2.552,
+      "duration_sec": 0.1299999999999999,
+      "ornament": {
+        "type": "andolan",
+        "frequency_hz": 9.999999999999769,
+        "amplitude_cents": 58.23031086845975,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 2.682,
+      "duration_sec": 0.10999999999999988,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -503.28646573153196,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "komal",
+      "octave": "Madhya",
+      "onset_sec": 2.792,
+      "duration_sec": 0.15000000000000036,
+      "ornament": {
+        "type": "andolan",
+        "frequency_hz": 9.999999999999991,
+        "amplitude_cents": 50.66534227908563,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 2.942,
+      "duration_sec": 0.1299999999999999,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -882.2246442522394,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 3.292,
+      "duration_sec": 0.2100000000000004,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -178.45551733877232,
+        "confidence": 0.8922775866938616
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 3.592,
+      "duration_sec": 0.10999999999999988,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -805.9076799665104,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 3.702,
+      "duration_sec": 0.16000000000000014,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -785.4417095761991,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 4.002,
+      "duration_sec": 0.18000000000000016,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 4.182,
+      "duration_sec": 0.1999999999999993,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 202.00989840323294,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Pa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 4.382,
+      "duration_sec": 0.35000000000000053,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -105.41257948094385,
+        "confidence": 0.5270628974047192
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "tivra",
+      "octave": "Madhya",
+      "onset_sec": 4.732,
+      "duration_sec": 0.17999999999999972,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -810.039474764081,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 5.022,
+      "duration_sec": 0.7799999999999994,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 5.802,
+      "duration_sec": 0.14000000000000057,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -642.3064545318203,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 5.942,
+      "duration_sec": 0.1200000000000001,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 929.8691369536916,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 6.062,
+      "duration_sec": 0.1299999999999999,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -636.5370530348505,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 6.192,
+      "duration_sec": 0.16999999999999993,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 6.362,
+      "duration_sec": 0.16999999999999993,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -183.13098982268176,
+        "confidence": 0.9156549491134087
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 6.532,
+      "duration_sec": 0.11000000000000032,
+      "ornament": {
+        "type": "kan",
+        "duration_sec": 0.11000000000000032,
+        "confidence": 0.7
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 6.642,
+      "duration_sec": 0.20999999999999996,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -349.7589996907545,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 6.852,
+      "duration_sec": 0.8099999999999996,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ni",
+      "variant": "komal",
+      "octave": "Mandra",
+      "onset_sec": 7.692,
+      "duration_sec": 0.10999999999999943,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -965.6919260493535,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ni",
+      "variant": "komal",
+      "octave": "Mandra",
+      "onset_sec": 7.862,
+      "duration_sec": 0.1200000000000001,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -334.49148660179566,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Dha",
+      "variant": "shuddha",
+      "octave": "Mandra",
+      "onset_sec": 7.982,
+      "duration_sec": 0.1800000000000006,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 305.64986914919797,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Dha",
+      "variant": "shuddha",
+      "octave": "Mandra",
+      "onset_sec": 8.212,
+      "duration_sec": 0.5,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 8.712,
+      "duration_sec": 0.17999999999999972,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -176.07010486079318,
+        "confidence": 0.8803505243039659
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Dha",
+      "variant": "shuddha",
+      "octave": "Mandra",
+      "onset_sec": 8.942,
+      "duration_sec": 0.16999999999999993,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 76.23621071579117,
+        "confidence": 0.3811810535789559
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ni",
+      "variant": "komal",
+      "octave": "Mandra",
+      "onset_sec": 9.112,
+      "duration_sec": 0.09999999999999964,
+      "ornament": {
+        "type": "kan",
+        "duration_sec": 0.09999999999999964,
+        "confidence": 0.7
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 9.212,
+      "duration_sec": 3.67,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Mandra",
+      "onset_sec": 12.902,
+      "duration_sec": 0.6000000000000014,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 13.582,
+      "duration_sec": 0.11999999999999922,
+      "ornament": {
+        "type": "kan",
+        "duration_sec": 0.11999999999999922,
+        "confidence": 0.7
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 13.772,
+      "duration_sec": 0.3100000000000005,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 14.082,
+      "duration_sec": 0.8699999999999992,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 15.012,
+      "duration_sec": 0.11999999999999922,
+      "ornament": {
+        "type": "andolan",
+        "frequency_hz": 6.666666666666809,
+        "amplitude_cents": 64.11744480041064,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 15.132,
+      "duration_sec": 0.1899999999999995,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -321.6883196149435,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 15.322,
+      "duration_sec": 0.1700000000000017,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -268.22602515126755,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 15.492,
+      "duration_sec": 0.1899999999999995,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -543.9571286881123,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 15.762,
+      "duration_sec": 0.20999999999999908,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 355.976510759048,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 16.022,
+      "duration_sec": 0.2400000000000002,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 16.302,
+      "duration_sec": 0.129999999999999,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 207.52301897317602,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 16.432,
+      "duration_sec": 0.15000000000000213,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -264.6660505021736,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 16.582,
+      "duration_sec": 0.17999999999999972,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 16.762,
+      "duration_sec": 0.10999999999999943,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -1058.9619227818102,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 16.962,
+      "duration_sec": 0.1700000000000017,
+      "ornament": {
+        "type": "andolan",
+        "frequency_hz": 6.666666666665624,
+        "amplitude_cents": 20.33744627140293,
+        "confidence": 0.40674892542805857
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 17.132,
+      "duration_sec": 0.18999999999999773,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Pa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 17.322,
+      "duration_sec": 0.35999999999999943,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "tivra",
+      "octave": "Madhya",
+      "onset_sec": 17.682,
+      "duration_sec": 0.19000000000000128,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -1177.7793758076668,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "komal",
+      "octave": "Madhya",
+      "onset_sec": 17.872,
+      "duration_sec": 0.10999999999999943,
+      "ornament": {
+        "type": "kan",
+        "duration_sec": 0.10999999999999943,
+        "confidence": 0.7
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 17.982,
+      "duration_sec": 0.7899999999999991,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 18.782,
+      "duration_sec": 0.14000000000000057,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -412.2525169736725,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 18.922,
+      "duration_sec": 0.10999999999999943,
+      "ornament": {
+        "type": "andolan",
+        "frequency_hz": 9.999999999998437,
+        "amplitude_cents": 60.32995430028295,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 19.032,
+      "duration_sec": 0.10000000000000142,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -928.2359730112968,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 19.172,
+      "duration_sec": 0.10999999999999943,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -383.72192382848476,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 19.282,
+      "duration_sec": 0.16000000000000014,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -386.3682069882952,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 19.492,
+      "duration_sec": 0.25,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -423.95901586408917,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 19.742,
+      "duration_sec": 0.8699999999999974,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ni",
+      "variant": "komal",
+      "octave": "Mandra",
+      "onset_sec": 20.812,
+      "duration_sec": 0.129999999999999,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -237.17684902987227,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Dha",
+      "variant": "shuddha",
+      "octave": "Mandra",
+      "onset_sec": 20.942,
+      "duration_sec": 0.5199999999999996,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Dha",
+      "variant": "shuddha",
+      "octave": "Mandra",
+      "onset_sec": 21.542,
+      "duration_sec": 0.11999999999999744,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -221.54658924449848,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 21.662,
+      "duration_sec": 0.15000000000000213,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -700.837619036586,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Dha",
+      "variant": "shuddha",
+      "octave": "Mandra",
+      "onset_sec": 21.812,
+      "duration_sec": 0.11999999999999744,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -985.0259207345694,
+        "confidence": 1.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 21.932,
+      "duration_sec": 0.8800000000000026,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Pa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 22.812,
+      "duration_sec": 0.629999999999999,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 83.82619858082909,
+        "confidence": 0.4191309929041454
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Taar",
+      "onset_sec": 23.442,
+      "duration_sec": 0.6000000000000014,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ni",
+      "variant": "komal",
+      "octave": "Madhya",
+      "onset_sec": 24.042,
+      "duration_sec": 0.23999999999999844,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -242.39649344525023,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Pa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 24.282,
+      "duration_sec": 0.5599999999999987,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 24.842,
+      "duration_sec": 0.10000000000000142,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 646.1055210657843,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 25.022,
+      "duration_sec": 0.14000000000000057,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 671.6355846774492,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Pa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 25.162,
+      "duration_sec": 0.25,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -50.73468889509106,
+        "confidence": 0.2536734444754553
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 25.412,
+      "duration_sec": 0.10000000000000142,
+      "ornament": {
+        "type": "meend",
+        "direction": "ascending",
+        "slope_cents_per_sec": 300.85083007818264,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 25.512,
+      "duration_sec": 0.129999999999999,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -318.39713631096987,
+        "confidence": 1.0
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ga",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 25.642,
+      "duration_sec": 0.19000000000000128,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -879.8362417339546,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 25.832,
+      "duration_sec": 0.18999999999999773,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 26.022,
+      "duration_sec": 0.11000000000000298,
+      "ornament": {
+        "type": "kan",
+        "duration_sec": 0.11000000000000298,
+        "confidence": 0.7
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Sa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 26.212,
+      "duration_sec": 0.8500000000000014,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 27.062,
+      "duration_sec": 0.8900000000000006,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ni",
+      "variant": "komal",
+      "octave": "Madhya",
+      "onset_sec": 27.952,
+      "duration_sec": 0.10999999999999943,
+      "ornament": {
+        "type": "kan",
+        "duration_sec": 0.10999999999999943,
+        "confidence": 0.7
+      },
+      "dynamics": "forte",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Pa",
+      "variant": "",
+      "octave": "Madhya",
+      "onset_sec": 28.142,
+      "duration_sec": 0.14000000000000057,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -112.1901739211153,
+        "confidence": 0.5609508696055765
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Ma",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 28.282,
+      "duration_sec": 0.129999999999999,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -402.77066317473316,
+        "confidence": 1.0
+      },
+      "dynamics": "mezzo",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 28.412,
+      "duration_sec": 0.13000000000000256,
+      "ornament": {
+        "type": "meend",
+        "direction": "descending",
+        "slope_cents_per_sec": -165.34405332623174,
+        "confidence": 0.8267202666311587
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    },
+    {
+      "swara": "Re",
+      "variant": "shuddha",
+      "octave": "Madhya",
+      "onset_sec": 28.692,
+      "duration_sec": 0.16000000000000014,
+      "ornament": {
+        "type": "none",
+        "confidence": 0.0
+      },
+      "dynamics": "piano",
+      "attack": "breathy"
+    }
+  ],
+  "audio_info": {
+    "duration_sec": 28.9900625,
+    "sample_rate": 16000
+  }
+}

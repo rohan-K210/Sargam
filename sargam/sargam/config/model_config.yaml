@@ -1,0 +1,128 @@
+# Sargam ML Pipeline Configuration
+
+# Audio preprocessing
+audio:
+  sample_rate: 16000
+  mono: true
+  trim_top_db: 30
+  preemphasis: 0.97
+  frame_length: 2048
+  hop_length: 160
+  window: "hann"
+  normalization: "peak"  # peak, rms, none
+  target_dbfs: -1.0
+
+# Pitch detection
+pitch:
+  primary: "crepe"  # crepe, pyin, essentia
+  fallback: "pyin"
+  crepe:
+    model_capacity: "tiny"  # tiny, small, medium, large
+    batch_size: 1024
+    device: "cpu"  # cpu, cuda
+    threshold: 0.5
+  pyin:
+    fmin: 50.0
+    fmax: 2000.0
+    frame_length: 2048
+    hop_length: 160
+  essentia:
+    enabled: false
+    frame_size: 2048
+    hop_size: 160
+
+# Tonic detection
+tonic:
+  method: "histogram_peak"
+  histogram_bins: 240  # 10 cents per bin over 2400 cents
+  min_salience_ratio: 0.05
+  refinement_window_cents: 50
+  validation_threshold: 0.8  # fraction of frames mapping to valid swaras
+  manual_override_enabled: true
+
+# Swara mapping
+swara:
+  mapping_file: "swara_mapping.yaml"
+  smoothing_window: 5  # median filter frames
+  max_cents_error: 100  # flag if error exceeds this
+
+# Onset detection
+onset:
+  method: "hybrid"  # spectral_flux, hybrid
+  spectral_flux:
+    n_mels: 64
+    fmin: 50
+    fmax: 8000
+    pre_max: 3
+    post_max: 3
+    delta: 0.1
+    wait: 10
+  cnn_refinement:
+    enabled: false
+    model_path: "models/onset/onset_cnn.pth"
+    context_frames: 20  # 200ms at 10ms hop
+    threshold: 0.5
+
+# Tempo/Laya
+tempo:
+  min_bpm: 30
+  max_bpm: 300
+  laya_thresholds:
+    vilambit: 1.5  # seconds per beat
+    madhya: 0.5
+    drut: 0.0
+
+# Gamaka detection
+gamaka:
+  method: "hybrid"  # rules, hybrid
+  rule_thresholds:
+    meend_slope_cents_per_sec: 50
+    andolan_freq_range: [4, 10]  # Hz
+    andolan_min_amp_cents: 20
+    gamak_freq_hz: 15
+    gamak_min_amp_cents: 60
+    kan_max_duration_sec: 0.15
+    kan_energy_ratio: 0.3
+    murki_min_changes: 4
+    murki_max_window_sec: 0.5
+  classifier:
+    enabled: true
+    model_type: "rf"  # rf, mlp
+    model_repo: "RK14x86/sargam-models"
+    model_filename: "gamaka/gamaka_classifier.joblib"
+    confidence_threshold: 0.6
+
+# Dynamics
+dynamics:
+  n_tertile_bins: 3
+  attack_window_sec: 0.1
+  sustain_position: 0.5
+  decay_window_sec: 0.2
+  attack_threshold_sharp: 0.5  # normalized slope
+
+# Silence/Breath detection
+silence:
+  short_gap_max_sec: 0.2
+  phrase_gap_max_sec: 1.0
+  breath:
+    min_duration_sec: 0.4
+    max_duration_sec: 1.5
+    min_spectral_centroid_hz: 3000
+    pre_gap_decay_threshold: 0.3
+
+# Timbre classification
+timbre:
+  model_type: "rf"  # rf, svm
+  model_repo: "RK14x86/sargam-models"
+  model_filename: "timbre/timbre_classifier.joblib"
+  classes: ["bansuri", "violin", "veena", "sitar", "vocals", "other"]
+  features:
+    mfcc_n: 13
+    include_deltas: true
+    include_spectral: true
+
+# Pipeline
+pipeline:
+  max_audio_duration_sec: 30  # for training chunks
+  chunk_overlap_sec: 1.0
+  enable_caching: true

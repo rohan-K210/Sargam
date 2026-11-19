@@ -1,0 +1,83 @@
+# Saraga Dataset Configuration
+
+# Zenodo download (Saraga 1.5 - record 4301737, Saraga Mini - record 16411600)
+download:
+  zenodo_doi: "10.5281/zenodo.4301737"
+  record_id: "16411600"  # Saraga Mini for quick testing
+  base_url: "https://zenodo.org/api/records"
+  subsets:
+    - carnatic
+    - hindustani
+  # Expected structure after extraction (adapt based on actual zip contents)
+  expected_files:
+    carnatic:
+      audio_dir: "saraga1.5_carnatic/audio"
+      pitch_dir: "saraga1.5_carnatic/pitch"
+      tonic_dir: "saraga1.5_carnatic/tonic"
+      annotation_dir: "saraga1.5_carnatic/annotations"
+    hindustani:
+      audio_dir: "saraga1.5_hindustani/audio"
+      pitch_dir: "saraga1.5_hindustani/pitch"
+      tonic_dir: "saraga1.5_hindustani/tonic"
+      annotation_dir: "saraga1.5_hindustani/annotations"
+    # Saraga Mini structure
+    saraga_mini:
+      audio_dir: "saraga audio"
+      pitch_dir: "saraga pitch"
+      tonic_dir: "saraga tonic"
+      annotation_dir: "saraga annotations"
+
+# Local paths (after extraction)
+paths:
+  root: "data/saraga"
+  metadata_csv: "data/saraga_metadata.csv"
+  splits_dir: "data/splits"
+
+# Split configuration
+split:
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  stratify_by: "raga"  # raga, tala, artist, or none
+  random_seed: 42
+  min_samples_per_raga: 2
+
+# Annotation formats
+annotations:
+  pitch:
+    format: "csv"
+    columns: ["time", "frequency", "voiced_flag"]
+    delimiter: ","
+  tonic:
+    format: "txt"
+    content: "single_float_hz"
+  notes:
+    format: "json"
+    schema:
+      - "onset_sec"
+      - "duration_sec"
+      - "svara"
+      - "variant"
+      - "octave"
+      - "ornament"  # optional
+  ornaments:
+    format: "json"  # if separate ornament annotations exist
+    schema:
+      - "onset_sec"
+      - "offset_sec"
+      - "type"
+      - "source_svara"
+      - "target_svara"
+
+# Audio processing for dataset
+preprocessing:
+  target_sr: 16000
+  normalize: true
+  trim_silence: true
+  max_duration_sec: 300  # skip files longer than this
+
+# Flute-specific filtering (for focused training)
+flute_filter:
+  enabled: true
+  instrument_keywords: ["bansuri", "flute", "venu", "murali"]
+  metadata_field: "instrument"

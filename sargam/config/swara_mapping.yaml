@@ -1,0 +1,92 @@
+# Swara Mapping Configuration - 12-Svara System (Cents Relative to Tonic)
+
+# Base svara positions in cents (1200 cents = 1 octave)
+svara_cents:
+  Sa: 0
+  Re_komal: 100
+  Re_shuddha: 200
+  Ga_komal: 300
+  Ga_shuddha: 400
+  Ma_shuddha: 500
+  Ma_tivra: 600
+  Pa: 700
+  Dha_komal: 800
+  Dha_shuddha: 900
+  Ni_komal: 1000
+  Ni_shuddha: 1100
+
+# Variant labels for output
+variant_labels:
+  Re_komal: "komal"
+  Re_shuddha: "shuddha"
+  Ga_komal: "komal"
+  Ga_shuddha: "shuddha"
+  Ma_shuddha: "shuddha"
+  Ma_tivra: "tivra"
+  Dha_komal: "komal"
+  Dha_shuddha: "shuddha"
+  Ni_komal: "komal"
+  Ni_shuddha: "shuddha"
+
+# Octave boundaries (cents relative to tonic)
+# A saptak spans a full octave starting at Sa: Madhya = [0, 1200), the
+# octave containing Sa itself through Ni just below the next Sa.
+octave_boundaries:
+  mandra_max: 0         # Below this = Mandra (lower octave)
+  madhya_min: 0         # Mandra/Madhya boundary
+  madhya_max: 1200       # Madhya/Taar boundary
+  taar_min: 1200         # Above this = Taar (higher octave)
+
+# Octave labels
+octave_labels:
+  mandra: "Mandra"
+  madhya: "Madhya"
+  taar: "Taar"
+
+# Swara display names (for student-facing output)
+display_names:
+  Sa: "Sa"
+  Re_komal: "Re♭"
+  Re_shuddha: "Re"
+  Ga_komal: "Ga♭"
+  Ga_shuddha: "Ga"
+  Ma_shuddha: "Ma"
+  Ma_tivra: "Ma♯"
+  Pa: "Pa"
+  Dha_komal: "Dha♭"
+  Dha_shuddha: "Dha"
+  Ni_komal: "Ni♭"
+  Ni_shuddha: "Ni"
+
+# Flute finger hints (for student feedback)
+finger_hints:
+  Sa: "All holes closed"
+  Re_komal: "Half-hole 1st"
+  Re_shuddha: "1st hole open"
+  Ga_komal: "Half-hole 2nd"
+  Ga_shuddha: "2nd hole open"
+  Ma_shuddha: "3rd hole open"
+  Ma_tivra: "Half-hole 3rd"
+  Pa: "4th hole open"
+  Dha_komal: "Half-hole 5th"
+  Dha_shuddha: "5th hole open"
+  Ni_komal: "Half-hole 6th"
+  Ni_shuddha: "6th hole open"
+
+# Ornament definitions
+ornaments:
+  meend:
+    description: "Smooth slide between svaras"
+    practice_tip: "Slide finger slowly, maintain steady breath"
+  andolan:
+    description: "Gentle oscillation around a svara"
+    practice_tip: "Control breath pressure, 4-7 Hz oscillation"
+  kan:
+    description: "Grace note before main svara"
+    practice_tip: "Quick finger tap, <100ms"
+  murki:
+    description: "Rapid cluster of svaras"
+    practice_tip: "Light fingers, precise articulation"
+  gamak:
+    description: "Heavy oscillation (vocal-style, rare on flute)"
+    practice_tip: "Not typical for bansuri - check technique"

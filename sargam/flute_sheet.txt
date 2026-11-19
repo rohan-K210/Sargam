@@ -1,0 +1,78 @@
+Sargam Notation Sheet
+Song: Alaipayuthey - solo flute clip (29s)
+Tonic (Sa): D#5 (626.2 Hz)
+Tempo: Drut (144 BPM)
+Instrument detected: bansuri
+
+Notes:
+-------------------------------------------------------
+  0.55s  Sa        [Madhya] (meend)
+  0.83s  Sa        [Madhya] (meend)
+  1.16s  Re        [Madhya] (meend)
+  1.97s  Pa        [Madhya]
+  2.15s  Ma        [Madhya] (meend)
+  2.55s  Re        [Madhya] (meend)
+  2.68s  Ma        [Madhya] (meend)
+  2.92s  Re        [Madhya] (meend)
+  3.27s  Ma        [Madhya] (meend)
+  3.58s  Re        [Madhya] (meend)
+  3.70s  Ma        [Madhya] (meend)
+  3.85s  Re        [Madhya] (meend)
+  3.98s  Ga        [Madhya] (meend)
+  4.18s  Ma        [Madhya] (meend)
+  4.38s  Pa        [Madhya] (meend)
+  4.75s  Ma        [Madhya] (meend)
+  5.00s  Re        [Madhya]
+  5.80s  Ma        [Madhya] (meend)
+  5.93s  Re        [Madhya] (meend)
+  6.06s  Ma        [Madhya] (meend)
+  6.19s  Re        [Madhya]
+  6.36s  Ma        [Madhya] (meend)
+  6.63s  Re        [Madhya] (meend)
+  6.85s  Sa        [Madhya] (meend)
+  7.68s  Niâ™­     [Mandra] (meend)
+  7.98s  Dha       [Mandra] (andolan)
+  8.72s  Sa        [Madhya] (meend)
+  8.92s  Dha       [Mandra] (andolan)
+  9.19s  Sa        [Madhya] (meend)
+ 13.57s  Sa        [Madhya] (meend)
+ 13.76s  Sa        [Madhya]
+ 14.08s  Re        [Madhya]
+ 14.99s  Ga        [Madhya] (meend)
+ 15.14s  Re        [Madhya] (meend)
+ 15.32s  Ma        [Madhya] (meend)
+ 15.52s  Ga        [Madhya] (meend)
+ 16.28s  Sa        [Madhya] (meend)
+ 16.43s  Ma        [Madhya] (meend)
+ 16.58s  Ga        [Madhya] (meend)
+ 16.85s  Ga        [Madhya] (meend)
+ 17.12s  Ma        [Madhya]
+ 17.32s  Pa        [Madhya]
+ 17.67s  Maâ™¯     [Madhya] (meend)
+ 17.98s  Re        [Madhya]
+ 18.78s  Ma        [Madhya] (meend)
+ 19.27s  Ma        [Madhya] (meend)
+ 19.48s  Re        [Madhya] (meend)
+ 19.74s  Sa        [Madhya]
+ 20.68s  Dha       [Mandra] (meend)
+ 20.82s  Niâ™­     [Mandra] (meend)
+ 20.94s  Dha       [Mandra] (meend)
+ 21.66s  Sa        [Madhya] (meend)
+ 21.81s  Dha       [Mandra] (meend)
+ 21.94s  Sa        [Madhya]
+ 22.81s  Pa        [Madhya] (meend)
+ 23.43s  Sa        [Taar]
+ 24.04s  Niâ™­     [Madhya] (meend)
+ 24.28s  Pa        [Madhya]
+ 25.02s  Ma        [Madhya] (meend)
+ 25.15s  Pa        [Madhya]
+ 25.50s  Ma        [Madhya] (meend)
+ 25.65s  Ga        [Madhya] (meend)
+ 25.82s  Ma        [Madhya]
+ 26.21s  Sa        [Madhya]
+ 27.06s  Re        [Madhya]
+ 28.13s  Pa        [Madhya] (kan)
+ 28.28s  Ma        [Madhya] (meend)
+ 28.41s  Re        [Madhya] (meend)
+ 28.54s  Ma        [Madhya] (meend)
+ 28.67s  Re        [Madhya] (meend)

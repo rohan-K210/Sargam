@@ -1,0 +1,57 @@
+Sargam Notation Sheet (v4 - timestamp-offset fix)
+Song: Tujhe Dekha To (Dilwale Dulhania Le Jayenge) - flute intro, first 30s
+Tonic (Sa): B3 (241.8 Hz)
+Tempo: Madhya (74 BPM)
+
+Notes (time, sargam, octave, ornament):
+-------------------------------------------------------
+  0.37s  Ga        [Mandra] (meend)
+  0.72s  Ma        [Mandra] (meend)
+  1.03s  Ma        [Mandra] (meend)
+  1.49s  Sa        [Madhya] (meend)
+  2.01s  Sa        [Madhya] (meend)
+  2.28s  Ni        [Mandra] (meend)
+  2.40s  Sa        [Madhya] (meend)
+  2.82s  Sa        [Madhya] (andolan)
+  3.11s  Niâ™­     [Mandra] (meend)
+  3.56s  Sa        [Madhya] (meend)
+  3.83s  Ni        [Mandra] (meend)
+  3.99s  Dhaâ™­    [Mandra] (meend)
+  4.62s  Niâ™­     [Mandra]
+  5.43s  Reâ™­     [Madhya] (meend)
+  5.84s  Sa        [Madhya] (andolan)
+  7.25s  Reâ™­     [Madhya] (meend)
+  7.54s  Sa        [Madhya] (meend)
+  7.93s  Dha       [Mandra] (meend)
+  8.40s  Sa        [Madhya] (meend)
+  8.68s  Dhaâ™­    [Mandra] (meend)
+  8.94s  Ma        [Mandra] (meend)
+  9.88s  Ma        [Mandra] (meend)
+ 10.20s  Sa        [Madhya] (meend)
+ 10.63s  Niâ™­     [Mandra] (meend)
+ 11.59s  Sa        [Madhya] (meend)
+ 11.85s  Niâ™­     [Mandra] (meend)
+ 11.97s  Dhaâ™­    [Mandra] (meend)
+ 12.53s  Sa        [Madhya] (meend)
+ 12.65s  Niâ™­     [Mandra]
+ 13.45s  Dhaâ™­    [Mandra] (meend)
+ 13.70s  Niâ™­     [Mandra] (meend)
+ 13.85s  Pa        [Mandra] (meend)
+ 14.46s  Maâ™¯     [Mandra] (meend)
+ 15.03s  Dhaâ™­    [Mandra] (meend)
+ 15.71s  Gaâ™­     [Mandra]
+ 16.44s  Ma        [Mandra] (meend)
+ 16.89s  Ma        [Mandra] (meend)
+ 17.76s  Sa        [Madhya]
+ 18.21s  Niâ™­     [Mandra]
+ 18.59s  Sa        [Madhya] (andolan)
+ 19.51s  Niâ™­     [Mandra] (meend)
+ 19.71s  Dhaâ™­    [Mandra] (meend)
+ 20.19s  Niâ™­     [Mandra] (meend)
+ 20.88s  Gaâ™­     [Madhya]
+ 21.69s  Ma        [Madhya] (meend)
+ 21.81s  Gaâ™­     [Madhya] (meend)
+ 21.93s  Sa        [Madhya] (meend)
+ 22.17s  Reâ™­     [Madhya] (andolan)
+ 22.73s  Reâ™­     [Madhya] (meend)
+ 23.28s  Reâ™­     [Madhya] (meend)
