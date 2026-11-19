@@ -1,11 +1,24 @@
-gradio
+# Web application
+Flask>=2.3
+flask-cors>=4.0
+
+# Audio analysis
 librosa
 numpy
 scipy
-google-genai
-python-dotenv
+soundfile
+
+# Optional source separation and beat tracking (Python <3.12 recommended)
 spleeter>=2.1.0,<2.5 ; python_version < '3.12'
 madmom>=0.16.1
+
+# Optional Gemini integrations
+google-genai
+python-dotenv
+
+# TensorFlow is used by optional Spleeter installations on supported Python versions
 tensorflow>=2.10 ; python_version < '3.12'
-# Note: Spleeter/madmom require Python <3.12 on some platforms.
-# On Python 3.12+, these are gracefully handled as optional via try/except in melody.py
+
+# Note: Spleeter and madmom can be difficult to install on newer Python versions.
+# The application treats these integrations as optional and reports availability
+# through /api/health and /api/config.
